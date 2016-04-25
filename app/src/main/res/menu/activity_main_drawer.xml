@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_reminders"
+            android:icon="@drawable/ic_note_add_black_24dp"
+            android:title="@string/navigation_drawer_reminders_option" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/navigation_drawer_settings_option" />
+
+    </group>
+
+    <item android:title="@string/drawerGroupTitle">
+        <menu>
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_stars_black_24dp"
+                android:title="@string/navigation_drawer_rate_option"
+                android:actionProviderClass="android.widget.ShareActionProvider" />
+
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_mail_outline_black_24dp"
+                android:title="@string/navigation_drawer_feedback_option" />
+        </menu>
+    </item>
+
+</menu>
+
+    <!--Not ready yet--><!--<item--><!--android:id="@+id/nav_about"--><!--android:icon="@drawable/ic_info_black_24dp"--><!--android:title="@string/navigation_drawer_about_option" />-->
