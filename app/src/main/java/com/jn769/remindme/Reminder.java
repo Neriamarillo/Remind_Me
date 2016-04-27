@@ -11,7 +11,7 @@ class Reminder {
     private String _time;
     private String _date;
     private String _description;
-    private boolean selected = false;
+    private boolean selected;
 
     public Reminder() {
 
@@ -81,7 +81,4 @@ class Reminder {
         this.selected = selected;
     }
 
-    public void toggleChecked() {
-        selected = !selected;
-    }
 }

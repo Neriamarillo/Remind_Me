@@ -8,9 +8,10 @@
     android:fitsSystemWindows="true"
     tools:context="com.jn769.remindme.EditReminder">
 
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -29,20 +30,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_overlay">
-        <!--  floating action menu with buttons -->
 
 
         <com.getbase.floatingactionbutton.FloatingActionsMenu
+
             android:id="@+id/fab_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
             fab:fab_addButtonColorNormal="@color/material_red"
             fab:fab_addButtonColorPressed="@color/white_pressed"
             fab:fab_addButtonPlusIconColor="@color/white"
             fab:fab_addButtonStrokeVisible="false"
             fab:fab_labelStyle="@style/menu_labels_style"
-            fab:fab_labelsPosition="left">
+            fab:fab_labelsPosition="left"
+            android:layout_gravity="bottom|right">
+
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabSave"
@@ -51,7 +53,7 @@
                 fab:fab_colorNormal="@color/material_red"
                 fab:fab_colorPressed="@color/white_pressed"
                 fab:fab_plusIconColor="@color/white"
-                fab:fab_icon="@drawable/ic_check_circle_black_24dp"
+                fab:fab_icon="@drawable/ic_done_white_24dp"
                 fab:fab_size="mini"
                 fab:fab_title="Save" />
 
@@ -62,7 +64,7 @@
                 fab:fab_colorNormal="@color/material_red"
                 fab:fab_colorPressed="@color/white_pressed"
                 fab:fab_plusIconColor="@color/white"
-                fab:fab_icon="@drawable/ic_undo_black_24dp"
+                fab:fab_icon="@drawable/ic_undo_white_24dp"
                 fab:fab_size="mini"
                 fab:fab_title="Cancel" />
 

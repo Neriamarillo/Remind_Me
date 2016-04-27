@@ -72,8 +72,9 @@ class DatabaseHandler extends SQLiteOpenHelper {
 
             reminder = new Reminder(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
                     cursor.getString(2), cursor.getString(3), cursor.getString(4));
+            db.close();
         }
-        db.close();
+
         return reminder;
     }
 
@@ -113,10 +114,10 @@ class DatabaseHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(reminder.getID())});
     }
 
-    public void deleteReminder(Reminder reminder) {
+    public void deleteReminder(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_REMINDERS, KEY_ID + " = ?",
-                new String[]{String.valueOf(reminder.getID())});
+                new String[]{String.valueOf(id)});
         db.close();
     }
 

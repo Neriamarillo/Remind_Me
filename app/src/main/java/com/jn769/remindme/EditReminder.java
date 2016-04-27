@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.DatePicker;
@@ -23,10 +24,20 @@ import java.util.Locale;
 
 public class EditReminder extends AppCompatActivity {
 
-    private Reminder reminder;
+    public Reminder reminder;
+    public RecyclerView.Adapter adapter;
     private final DatabaseHandler db = new DatabaseHandler(this);
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
+
+    EditText title;
+    EditText date;
+    EditText time;
+    EditText description;
+
+    FloatingActionsMenu fabMenu;
+    com.getbase.floatingactionbutton.FloatingActionButton fabSave;
+    com.getbase.floatingactionbutton.FloatingActionButton fabCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +46,22 @@ public class EditReminder extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        fabMenu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
+        fabSave = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.fabSave);
+        fabCancel = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.fabCancel);
+
+        title = (EditText) findViewById(R.id.titleEditText);
+        time = (EditText) findViewById(R.id.timeEditText);
+        date = (EditText) findViewById(R.id.dateEditText);
+        description = (EditText) findViewById(R.id.descEditText);
+
         Bundle reminderID = getIntent().getExtras();
         reminder = db.getReminder(reminderID.getInt("id"));
 
         dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         timeFormatter = new SimpleDateFormat("h:mm a", Locale.US);
 
-        final FloatingActionsMenu fabMenu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
-
-        com.getbase.floatingactionbutton.FloatingActionButton fabSave = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.fabSave);
-        assert fabSave != null;
         fabSave.setVisibility(View.VISIBLE);
-
-        com.getbase.floatingactionbutton.FloatingActionButton fabCancel = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.fabCancel);
-        assert fabCancel != null;
         fabCancel.setVisibility(View.VISIBLE);
 
         fabSave.setOnClickListener(new View.OnClickListener() {
@@ -87,11 +100,6 @@ public class EditReminder extends AppCompatActivity {
 
     private void getReminderInfo() {
 
-        EditText title = (EditText) findViewById(R.id.titleEditText);
-        EditText date = (EditText) findViewById(R.id.dateEditText);
-        EditText time = (EditText) findViewById(R.id.timeEditText);
-        EditText description = (EditText) findViewById(R.id.descEditText);
-
         assert title != null;
         title.setText(reminder.getTitle());
         assert date != null;
@@ -104,22 +112,18 @@ public class EditReminder extends AppCompatActivity {
 
     private void setReminderInfo() {
 
-        EditText titleInput = (EditText) findViewById(R.id.titleEditText);
-        EditText dateInput = (EditText) findViewById(R.id.dateEditText);
-        EditText timeInput = (EditText) findViewById(R.id.timeEditText);
-        EditText descriptionInput = (EditText) findViewById(R.id.descEditText);
-
-        if (titleInput.getText().toString().isEmpty()) {
+        if (title.getText().toString().isEmpty()) {
             Context context = getApplicationContext();
             CharSequence text = "Need to set a title";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         } else {
-            reminder.setTitle(titleInput.getText().toString());
-            reminder.setDate(dateInput.getText().toString());
-            reminder.setTime(timeInput.getText().toString());
-            reminder.setDescription(descriptionInput.getText().toString());
+            assert title != null;
+            reminder.setTitle(title.getText().toString());
+            reminder.setDate(date.getText().toString());
+            reminder.setTime(time.getText().toString());
+            reminder.setDescription(description.getText().toString());
         }
     }
 
