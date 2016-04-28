@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     private int getposition;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -239,8 +240,7 @@ public class MainActivity extends AppCompatActivity
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-        //FIRST TIME DIALOG
-
+//      FIRST TIME DIALOG
 
     }
 
@@ -369,5 +369,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
 

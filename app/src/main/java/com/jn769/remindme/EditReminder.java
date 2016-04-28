@@ -24,11 +24,20 @@ import java.util.Locale;
 
 public class EditReminder extends AppCompatActivity {
 
+    Context context;
     public Reminder reminder;
+    public AddReminder addReminder;
+
     public RecyclerView.Adapter adapter;
     private final DatabaseHandler db = new DatabaseHandler(this);
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
+    Calendar mCalendarSet;
+    int hour;
+    int minute;
+    int mYear;
+    int mMonth;
+    int mDay;
 
     EditText title;
     EditText date;
@@ -55,6 +64,13 @@ public class EditReminder extends AppCompatActivity {
         date = (EditText) findViewById(R.id.dateEditText);
         description = (EditText) findViewById(R.id.descEditText);
 
+        mCalendarSet = Calendar.getInstance();
+        hour = mCalendarSet.get(Calendar.HOUR_OF_DAY);
+        minute = mCalendarSet.get(Calendar.MINUTE);
+        mYear = mCalendarSet.get(Calendar.YEAR);
+        mMonth = mCalendarSet.get(Calendar.MONTH);
+        mDay = mCalendarSet.get(Calendar.DAY_OF_MONTH);
+
         Bundle reminderID = getIntent().getExtras();
         reminder = db.getReminder(reminderID.getInt("id"));
 
@@ -69,6 +85,7 @@ public class EditReminder extends AppCompatActivity {
             public void onClick(View v) {
                 setReminderInfo();
                 db.updateReminder(reminder);
+//                setAlarm(editedNotification());
                 finish();
             }
         });
@@ -134,16 +151,14 @@ public class EditReminder extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                final Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
+
 
                 final TimePickerDialog mTimePicker = new TimePickerDialog(EditReminder.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        mcurrentTime.set(Calendar.HOUR_OF_DAY, selectedHour);
-                        mcurrentTime.set(Calendar.MINUTE, selectedMinute);
-                        setTime.setText(timeFormatter.format(mcurrentTime.getTime()));
+                        mCalendarSet.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        mCalendarSet.set(Calendar.MINUTE, selectedMinute);
+                        setTime.setText(timeFormatter.format(mCalendarSet.getTime()));
                     }
                 }, hour, minute, false);
                 mTimePicker.show();
@@ -160,15 +175,12 @@ public class EditReminder extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                final Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                final Calendar mCalendarSet = Calendar.getInstance();
 
                 DatePickerDialog mDatePicker = new DatePickerDialog(EditReminder.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
-                        mcurrentDate.set(selectedYear, selectedMonth, selectedDay);
-                        setDate.setText(dateFormatter.format(mcurrentDate.getTime()));
+                        mCalendarSet.set(selectedYear, selectedMonth, selectedDay);
+                        setDate.setText(dateFormatter.format(mCalendarSet.getTime()));
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.show();
@@ -176,5 +188,55 @@ public class EditReminder extends AppCompatActivity {
             }
         });
     }
+//
+//    public void setAlarm(NotificationManager notification) {
+//
+//
+//        Intent notificationIntent = new Intent(this, Alarm.class);
+//        notificationIntent.putExtra(Alarm.NOTIFICATION_ID, 1);
+//        notificationIntent.putExtra(Alarm.NOTIFICATION, (Parcelable) notification);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, 0);
+//
+//        mCalendarSet = Calendar.getInstance();
+//        mCalendarSet.set(Calendar.HOUR_OF_DAY, hour);
+//        mCalendarSet.set(Calendar.MINUTE, minute);
+//        mCalendarSet.set(Calendar.YEAR, mYear);
+//        mCalendarSet.set(Calendar.MONTH, mMonth);
+//        mCalendarSet.set(Calendar.DATE, mDay);
+//        mCalendarSet.set(mYear, mMonth, mDay, hour, minute);
+//
+//        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        alarmMgr.set(AlarmManager.RTC_WAKEUP, mCalendarSet.getTimeInMillis(), pendingIntent);
+//    }
+//
+////    private void updateNotification() {
+////        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+////        int notifyID = 1;
+////        android.support.v4.app.NotificationCompat.Builder mNotifyBuilder = new android.support.v4.app.NotificationCompat.Builder(this)
+////                .setSmallIcon(R.drawable.ic_add_alert_black_24dp)
+////                .setOnlyAlertOnce(true)
+////                .setAutoCancel(true)
+////                .setContentTitle(reminder.getTitle())
+////                .setContentText(reminder.getTime())
+////                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+////        return mNotificationManager.notify(
+////                notifyID,
+////                mNotifyBuilder.build());
+////    }
+//
+//    public NotificationManager editedNotification() {
+//        int notifyID = 1;
+//        android.support.v4.app.NotificationCompat.Builder mNotifyBuilder = new android.support.v4.app.NotificationCompat.Builder(this)
+//                .setSmallIcon(R.drawable.ic_add_alert_black_24dp)
+//                .setOnlyAlertOnce(true)
+//                .setAutoCancel(true)
+//                .setContentTitle(reminder.getTitle())
+//                .setContentText(reminder.getTime())
+//                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+//        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        return mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+//
+//
+//    }
 
 }
