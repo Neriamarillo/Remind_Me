@@ -52,8 +52,6 @@ public class AddReminder extends AppCompatActivity {
     int mDay;
     private int mId;
 
-    String date;
-    String time;
 
     AlarmManager alarmMgr;
     PendingIntent pendingIntent;
@@ -85,7 +83,7 @@ public class AddReminder extends AppCompatActivity {
         mCalendarSet = new GregorianCalendar();
 
         dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        timeFormatter = new SimpleDateFormat("h:mm:ss a", Locale.US);
+        timeFormatter = new SimpleDateFormat("h:mm a", Locale.US);
 
         selectDate();
         selectTime();
@@ -140,9 +138,11 @@ public class AddReminder extends AppCompatActivity {
                 hour = mCalendarSet.get(Calendar.HOUR_OF_DAY);
                 minute = mCalendarSet.get(Calendar.MINUTE);
 
-                final TimePickerDialog mTimePicker = new TimePickerDialog(AddReminder.this, new TimePickerDialog.OnTimeSetListener() {
+                final TimePickerDialog mTimePicker = new TimePickerDialog(AddReminder.this,
+                        new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    public void onTimeSet(TimePicker timePicker, int selectedHour,
+                                          int selectedMinute) {
                         mCalendarSet.set(Calendar.HOUR_OF_DAY, selectedHour);
                         mCalendarSet.set(Calendar.MINUTE, selectedMinute);
                         setTime.setText(timeFormatter.format(mCalendarSet.getTime()));
@@ -150,7 +150,8 @@ public class AddReminder extends AppCompatActivity {
                         minute = mCalendarSet.getTime().getMinutes();
                         seconds = mCalendarSet.getTime().getSeconds();
 
-                        Log.d("MCALENDAR--->", "time: " + mCalendarSet.getTime().getHours() + ':' + mCalendarSet.getTime().getMinutes());
+                        Log.d("MCALENDAR--->", "time: " + mCalendarSet.getTime().getHours()
+                                + ':' + mCalendarSet.getTime().getMinutes());
                     }
                 }, hour, minute, false);
                 mTimePicker.show();

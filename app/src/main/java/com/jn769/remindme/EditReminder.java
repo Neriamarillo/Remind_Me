@@ -1,12 +1,20 @@
 package com.jn769.remindme;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -30,11 +38,19 @@ public class EditReminder extends AppCompatActivity {
 
     public RecyclerView.Adapter adapter;
     private final DatabaseHandler db = new DatabaseHandler(this);
+
+    AlarmManager alarmMgr;
+    PendingIntent pendingIntent;
+    Alarm alarm;
+    protected Intent notificationIntent;
+    Intent resultIntent;
+
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
     Calendar mCalendarSet;
     int hour;
     int minute;
+    int seconds;
     int mYear;
     int mMonth;
     int mDay;
@@ -85,7 +101,7 @@ public class EditReminder extends AppCompatActivity {
             public void onClick(View v) {
                 setReminderInfo();
                 db.updateReminder(reminder);
-//                setAlarm(editedNotification());
+                setAlarm();
                 finish();
             }
         });
@@ -130,18 +146,19 @@ public class EditReminder extends AppCompatActivity {
     private void setReminderInfo() {
 
         if (title.getText().toString().isEmpty()) {
-            Context context = getApplicationContext();
-            CharSequence text = "Need to set a title";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+
+            Toast.makeText(this, "Title cannot be empty", Toast.LENGTH_LONG).show();
+
         } else {
+
             assert title != null;
             reminder.setTitle(title.getText().toString());
             reminder.setDate(date.getText().toString());
             reminder.setTime(time.getText().toString());
             reminder.setDescription(description.getText().toString());
+
         }
+
     }
 
     private void selectTime() {
@@ -152,13 +169,24 @@ public class EditReminder extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                mCalendarSet = Calendar.getInstance();
+                hour = mCalendarSet.get(Calendar.HOUR_OF_DAY);
+                minute = mCalendarSet.get(Calendar.MINUTE);
 
-                final TimePickerDialog mTimePicker = new TimePickerDialog(EditReminder.this, new TimePickerDialog.OnTimeSetListener() {
+                final TimePickerDialog mTimePicker = new TimePickerDialog(EditReminder.this,
+                        new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    public void onTimeSet(TimePicker timePicker, int selectedHour,
+                                          int selectedMinute) {
                         mCalendarSet.set(Calendar.HOUR_OF_DAY, selectedHour);
                         mCalendarSet.set(Calendar.MINUTE, selectedMinute);
                         setTime.setText(timeFormatter.format(mCalendarSet.getTime()));
+                        hour = mCalendarSet.getTime().getHours();
+                        minute = mCalendarSet.getTime().getMinutes();
+                        seconds = mCalendarSet.getTime().getSeconds();
+
+                        Log.d("MCALENDAR--->", "time: " + mCalendarSet.getTime().getHours()
+                                + ':' + mCalendarSet.getTime().getMinutes());
                     }
                 }, hour, minute, false);
                 mTimePicker.show();
@@ -175,12 +203,19 @@ public class EditReminder extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                final Calendar mCalendarSet = Calendar.getInstance();
+                mCalendarSet = Calendar.getInstance();
+                mYear = mCalendarSet.get(Calendar.YEAR);
+                mMonth = mCalendarSet.get(Calendar.MONTH);
+                mDay = mCalendarSet.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog mDatePicker = new DatePickerDialog(EditReminder.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
                         mCalendarSet.set(selectedYear, selectedMonth, selectedDay);
                         setDate.setText(dateFormatter.format(mCalendarSet.getTime()));
+                        mYear = mCalendarSet.get(Calendar.YEAR);
+                        mMonth = mCalendarSet.get(Calendar.MONTH);
+                        mDay = mCalendarSet.get(Calendar.DAY_OF_MONTH);
+                        Log.d("MCALENDAR--->", mCalendarSet.get(Calendar.YEAR) + " " + mCalendarSet.get(Calendar.MONTH) + " " + mCalendarSet.get(Calendar.DAY_OF_MONTH));
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.show();
@@ -188,55 +223,54 @@ public class EditReminder extends AppCompatActivity {
             }
         });
     }
-//
-//    public void setAlarm(NotificationManager notification) {
-//
-//
-//        Intent notificationIntent = new Intent(this, Alarm.class);
-//        notificationIntent.putExtra(Alarm.NOTIFICATION_ID, 1);
-//        notificationIntent.putExtra(Alarm.NOTIFICATION, (Parcelable) notification);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, 0);
-//
-//        mCalendarSet = Calendar.getInstance();
-//        mCalendarSet.set(Calendar.HOUR_OF_DAY, hour);
-//        mCalendarSet.set(Calendar.MINUTE, minute);
-//        mCalendarSet.set(Calendar.YEAR, mYear);
-//        mCalendarSet.set(Calendar.MONTH, mMonth);
-//        mCalendarSet.set(Calendar.DATE, mDay);
-//        mCalendarSet.set(mYear, mMonth, mDay, hour, minute);
-//
-//        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//        alarmMgr.set(AlarmManager.RTC_WAKEUP, mCalendarSet.getTimeInMillis(), pendingIntent);
-//    }
-//
-////    private void updateNotification() {
-////        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-////        int notifyID = 1;
-////        android.support.v4.app.NotificationCompat.Builder mNotifyBuilder = new android.support.v4.app.NotificationCompat.Builder(this)
-////                .setSmallIcon(R.drawable.ic_add_alert_black_24dp)
-////                .setOnlyAlertOnce(true)
-////                .setAutoCancel(true)
-////                .setContentTitle(reminder.getTitle())
-////                .setContentText(reminder.getTime())
-////                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-////        return mNotificationManager.notify(
-////                notifyID,
-////                mNotifyBuilder.build());
-////    }
-//
-//    public NotificationManager editedNotification() {
-//        int notifyID = 1;
-//        android.support.v4.app.NotificationCompat.Builder mNotifyBuilder = new android.support.v4.app.NotificationCompat.Builder(this)
-//                .setSmallIcon(R.drawable.ic_add_alert_black_24dp)
-//                .setOnlyAlertOnce(true)
-//                .setAutoCancel(true)
-//                .setContentTitle(reminder.getTitle())
-//                .setContentText(reminder.getTime())
-//                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-//        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        return mNotificationManager.notify(notifyID, mNotifyBuilder.build());
-//
-//
-//    }
+
+    public void setAlarm() {
+
+        context = getApplicationContext();
+
+        mCalendarSet = Calendar.getInstance();
+        mCalendarSet.setTimeInMillis(System.currentTimeMillis());
+        mCalendarSet.set(Calendar.HOUR_OF_DAY, hour);
+        mCalendarSet.set(Calendar.MINUTE, minute);
+        mCalendarSet.set(Calendar.SECOND, seconds);
+        Log.d("MCALENDAR--->", "hour: " + hour + '\n' + "minute: " + minute + '\n' + "seconds: " + seconds + '\n' + "year: " + mYear + '\n' + "month: " + mMonth + '\n' + "day: " + mDay);
+        mCalendarSet.set(mYear, mMonth, mDay, hour, minute, seconds);
+        Log.d("MCMillis", String.valueOf(mCalendarSet.getTimeInMillis()));
+        Log.d("SystemMillis", String.valueOf(System.currentTimeMillis()));
+
+        notificationIntent = new Intent(context, Alarm.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+
+        notificationIntent.putExtra(Alarm.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(Alarm.NOTIFICATION, notification());
+
+        pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, mCalendarSet.getTimeInMillis(), pendingIntent);
+
+    }
+
+    private Notification notification() {
+        NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_add_alert_black_24dp)
+                .setContentTitle(reminder.getTitle())
+                .setContentText(reminder.getTime())
+                .setSound(Uri.parse("content://settings/system/notification_sound"))
+                .setAutoCancel(true);
+        Log.d("Add Reminder", "------------>Created Notification<-------------");
+
+        resultIntent = new Intent(this, MainActivity.class);
+        PendingIntent notifyPendingIntent =
+                PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(notifyPendingIntent);
+
+        return builder.build();
+
+    }
 
 }
