@@ -24,7 +24,8 @@ public class Alarm extends BroadcastReceiver {
 
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        assert notificationManager != null;
         notificationManager.notify(id, notification);
 
     }

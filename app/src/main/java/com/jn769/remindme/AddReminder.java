@@ -140,20 +140,20 @@ public class AddReminder extends AppCompatActivity {
 
                 final TimePickerDialog mTimePicker = new TimePickerDialog(AddReminder.this,
                         new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour,
-                                          int selectedMinute) {
-                        mCalendarSet.set(Calendar.HOUR_OF_DAY, selectedHour);
-                        mCalendarSet.set(Calendar.MINUTE, selectedMinute);
-                        setTime.setText(timeFormatter.format(mCalendarSet.getTime()));
-                        hour = mCalendarSet.getTime().getHours();
-                        minute = mCalendarSet.getTime().getMinutes();
-                        seconds = mCalendarSet.getTime().getSeconds();
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int selectedHour,
+                                                  int selectedMinute) {
+                                mCalendarSet.set(Calendar.HOUR_OF_DAY, selectedHour);
+                                mCalendarSet.set(Calendar.MINUTE, selectedMinute);
+                                setTime.setText(timeFormatter.format(mCalendarSet.getTime()));
+                                hour = mCalendarSet.getTime().getHours();
+                                minute = mCalendarSet.getTime().getMinutes();
+                                seconds = mCalendarSet.getTime().getSeconds();
 
-                        Log.d("MCALENDAR--->", "time: " + mCalendarSet.getTime().getHours()
-                                + ':' + mCalendarSet.getTime().getMinutes());
-                    }
-                }, hour, minute, false);
+                                Log.d("MCALENDAR--->", "time: " + mCalendarSet.getTime().getHours()
+                                        + ':' + mCalendarSet.getTime().getMinutes());
+                            }
+                        }, hour, minute, false);
                 mTimePicker.show();
 
             }
@@ -211,26 +211,32 @@ public class AddReminder extends AppCompatActivity {
 
     public void scheduleNotification() {
 
-        context = getApplicationContext();
 
-        mCalendarSet = Calendar.getInstance();
-        mCalendarSet.setTimeInMillis(System.currentTimeMillis());
-        mCalendarSet.set(Calendar.HOUR_OF_DAY, hour);
-        mCalendarSet.set(Calendar.MINUTE, minute);
-        mCalendarSet.set(Calendar.SECOND, seconds);
-        Log.d("MCALENDAR--->", "hour: " + hour + '\n' + "minute: " + minute + '\n' + "seconds: " + seconds + '\n' + "year: " + mYear + '\n' + "month: " + mMonth + '\n' + "day: " + mDay);
-        mCalendarSet.set(mYear, mMonth, mDay, hour, minute, seconds);
-        Log.d("MCMillis", String.valueOf(mCalendarSet.getTimeInMillis()));
-        Log.d("SystemMillis", String.valueOf(System.currentTimeMillis()));
+        if (!reminder.getTime().equals("") && !reminder.getDate().equals("")) {
 
-        notificationIntent = new Intent(context, Alarm.class);
+            context = getApplicationContext();
 
-        notificationIntent.putExtra(Alarm.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(Alarm.NOTIFICATION, notification());
+            mCalendarSet = Calendar.getInstance();
+            mCalendarSet.setTimeInMillis(System.currentTimeMillis());
+            mCalendarSet.set(Calendar.HOUR_OF_DAY, hour);
+            mCalendarSet.set(Calendar.MINUTE, minute);
+            mCalendarSet.set(Calendar.SECOND, seconds);
+            Log.d("MCALENDAR--->", "hour: " + hour + '\n' + "minute: " + minute + '\n' + "seconds: " + seconds + '\n' + "year: " + mYear + '\n' + "month: " + mMonth + '\n' + "day: " + mDay);
+            mCalendarSet.set(mYear, mMonth, mDay, hour, minute, seconds);
+            Log.d("MCMillis", String.valueOf(mCalendarSet.getTimeInMillis()));
+            Log.d("SystemMillis", String.valueOf(System.currentTimeMillis()));
 
-        pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, mCalendarSet.getTimeInMillis(), pendingIntent);
+            notificationIntent = new Intent(context, Alarm.class);
+
+            notificationIntent.putExtra(Alarm.NOTIFICATION_ID, 1);
+            notificationIntent.putExtra(Alarm.NOTIFICATION, notification());
+
+            pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, mCalendarSet.getTimeInMillis(), pendingIntent);
+        } else {
+            Log.d("No notification created", "Notify");
+        }
 
     }
 

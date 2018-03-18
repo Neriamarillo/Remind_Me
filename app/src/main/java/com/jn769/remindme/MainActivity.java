@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity
         frameLayout.getBackground().setAlpha(0);
         assert fabMenu != null;
         fabMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public void onMenuExpanded() {
                 frameLayout.getBackground().setAlpha(0);
