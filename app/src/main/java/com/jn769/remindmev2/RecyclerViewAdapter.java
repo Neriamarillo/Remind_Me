@@ -1,4 +1,4 @@
-package com.jn769.remindme;
+package com.jn769.remindmev2;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package com.jn769.remindme;
+package com.jn769.remindmev2;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

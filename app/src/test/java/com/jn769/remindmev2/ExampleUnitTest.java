@@ -1,4 +1,4 @@
-package com.jn769.remindme;
+package com.jn769.remindmev2;
 
 import org.junit.Test;
 
