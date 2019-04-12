@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,81 +8,79 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="?attr/colorPrimary" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        layout="@layout/content_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!--<include-->
+    <!--layout="@layout/content_main"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
 
 
-    <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white_overlay">
-        <!--  floating action menu with buttons -->
+    <!--<FrameLayout-->
+    <!--android:id="@+id/frame_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@color/white_overlay">-->
+    <!--&lt;!&ndash;  floating action menu with buttons &ndash;&gt;-->
 
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/fab_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            fab:fab_addButtonColorNormal="@color/material_red"
-            fab:fab_addButtonColorPressed="@color/white_pressed"
-            fab:fab_addButtonPlusIconColor="@color/white"
-            fab:fab_addButtonStrokeVisible="false"
-            fab:fab_labelStyle="@style/menu_labels_style"
-            fab:fab_labelsPosition="left">
+    <!--&lt;!&ndash;<com.getbase.floatingactionbutton.FloatingActionsMenu&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/fab_menu"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_gravity="right|bottom"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_addButtonColorNormal="@color/material_red"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_addButtonColorPressed="@color/white_pressed"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_addButtonPlusIconColor="@color/white"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_addButtonStrokeVisible="false"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_labelStyle="@style/menu_labels_style"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_labelsPosition="left">&ndash;&gt;-->
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/material_red"
-                fab:fab_colorPressed="@color/white_pressed"
-                fab:fab_plusIconColor="@color/white"
-                fab:fab_icon="@drawable/ic_mode_edit_white_24dp"
-                fab:fab_size="mini"
-                fab:fab_title="Edit" />
+    <!--&lt;!&ndash;<com.getbase.floatingactionbutton.FloatingActionButton&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/fabEdit"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_colorNormal="@color/material_red"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_colorPressed="@color/white_pressed"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_plusIconColor="@color/white"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_icon="@drawable/ic_mode_edit_white_24dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_size="mini"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_title="Edit" />&ndash;&gt;-->
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/material_red"
-                fab:fab_colorPressed="@color/white_pressed"
-                fab:fab_plusIconColor="@color/white"
-                fab:fab_icon="@drawable/ic_delete_white_24dp"
-                fab:fab_size="mini"
-                fab:fab_title="Delete" />
+    <!--&lt;!&ndash;<com.getbase.floatingactionbutton.FloatingActionButton&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/fabDelete"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_colorNormal="@color/material_red"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_colorPressed="@color/white_pressed"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_plusIconColor="@color/white"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_icon="@drawable/ic_delete_white_24dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_size="mini"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_title="Delete" />&ndash;&gt;-->
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/material_red"
-                fab:fab_colorPressed="@color/white_pressed"
-                fab:fab_plusIconColor="@color/white"
-                fab:fab_icon="@drawable/ic_add_white_24dp"
-                fab:fab_size="mini"
-                fab:fab_title="Add" />
+    <!--&lt;!&ndash;<com.getbase.floatingactionbutton.FloatingActionButton&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/fabAdd"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_colorNormal="@color/material_red"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_colorPressed="@color/white_pressed"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_plusIconColor="@color/white"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_icon="@drawable/ic_add_white_24dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_size="mini"&ndash;&gt;-->
+    <!--&lt;!&ndash;fab:fab_title="Add" />&ndash;&gt;-->
 
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    <!--&lt;!&ndash;</com.getbase.floatingactionbutton.FloatingActionsMenu>&ndash;&gt;-->
 
-    </FrameLayout>
+    <!--</FrameLayout>-->
 
 
 </android.support.design.widget.CoordinatorLayout>

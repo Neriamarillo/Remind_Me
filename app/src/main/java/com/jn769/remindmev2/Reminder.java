@@ -1,84 +1,108 @@
 package com.jn769.remindmev2;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import java.util.Date;
+
 /**
  * @author Jorge Nieves
  * @version 1.0
  */
-class Reminder {
+@Entity(tableName = "reminders")
+public class Reminder {
 
-    private int _id;
-    private String _title;
-    private String _time;
-    private String _date;
-    private String _description;
-    private boolean selected;
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "id")
+    private int id;
+
+    @ColumnInfo(name = "title")
+    private String title;
+
+    @ColumnInfo(name = "time")
+    @Nullable
+    private String time;
+
+    @ColumnInfo(name = "date")
+    @TypeConverters(DateConverter.class)
+    @Nullable
+    private Date date;
+
+    @ColumnInfo(name = "description")
+    @Nullable
+    private String description;
 
     public Reminder() {
-
     }
 
-    public Reminder(int _id, String _title, String _time, String _date, String _description) {
-        this._id = _id;
-        this._title = _title;
-        this._time = _time;
-        this._date = _date;
-        this._description = _description;
+    @Ignore
+    public Reminder(int id, String title, String time, Date date, String description) {
+        this.id = id;
+        this.title = title;
+        this.time = time;
+        this.date = date;
+        this.description = description;
     }
 
-
-    public Reminder(String _title, String _time, String _date, String _description) {
-        this._title = _title;
-        this._time = _time;
-        this._date = _date;
-        this._description = _description;
+    public Reminder(String title, String time, Date date, String description) {
+        this.title = title;
+        this.time = time;
+        this.date = date;
+        this.description = description;
     }
 
-    public int getID() {
-        return _id;
+    public Reminder(Reminder reminder) {
+        this.id = reminder.getId();
+        this.title = reminder.getTitle();
+        this.time = reminder.getTime();
+        this.date = reminder.getDate();
+        this.description = reminder.getDescription();
     }
 
-    public void setID(int _id) {
-        this._id = _id;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int _id) {
+        this.id = _id;
     }
 
     public String getTitle() {
-        return _title;
+        return title;
     }
 
     public void setTitle(String _title) {
-        this._title = _title;
+        this.title = _title;
     }
 
     public String getTime() {
-        return _time;
+        return time;
     }
 
     public void setTime(String _time) {
-        this._time = _time;
+        this.time = _time;
     }
 
-    public String getDate() {
-        return _date;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDate(String _date) {
-        this._date = _date;
+    public void setDate(Date _date) {
+        this.date = _date;
     }
 
     public String getDescription() {
-        return _description;
+        return description;
     }
 
     public void setDescription(String _description) {
-        this._description = _description;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+        this.description = _description;
     }
 
 }

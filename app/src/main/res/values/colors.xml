@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303f9f</color>
-    <color name="colorAccent">#d50000</color>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303f9f</color>-->
+    <!--<color name="colorAccent">#d50000</color>-->
 
     <color name="material_red">#d50000</color>
     <color name="black_semi_transparent">#B2000000</color>
     <color name="background">#e5e5e5</color>
     <color name="half_black">#808080</color>
-    <color name="white">#fafafa</color>
+    <color name="white">#ffffff</color>
     <color name="white_pressed">#f1f1f1</color>
     <color name="pink">#e91e63</color>
     <color name="pink_pressed">#ec407a</color>
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
-    <color name="accent_dark">#ff2929</color>
-    <color name="accent">#ff5252</color>
-    <color name="secondary_text">#727272</color>
+    <!--<color name="accent_dark">#ff2929</color>-->
+    <!--<color name="accent">#ff5252</color>-->
+    <!--<color name="secondary_text">#727272</color>-->
+    <!---->
     <color name="white_overlay">#00f3f3f3</color>
+    <!--<color name="primaryColor">#546e7a</color>-->
+    <!--<color name="primaryLightColor">#819ca9</color>-->
+    <!--<color name="primaryDarkColor">#29434e</color>-->
+    <!--<color name="secondaryColor">#dd2c00</color>-->
+    <!--<color name="secondaryLightColor">#ff6434</color>-->
+    <!--<color name="secondaryDarkColor">#a30000</color>-->
+    <!--<color name="primaryTextColor">#ffffff</color>-->
+    <!--<color name="secondaryTextColor">#ffffff</color>-->
+    <color name="primaryColor">#546e7a</color>
+    <color name="primaryLightColor">#819ca9</color>
+    <color name="primaryDarkColor">#29434e</color>
+    <color name="secondaryColor">#dd2c00</color>
+    <color name="secondaryLightColor">#ff6434</color>
+    <color name="secondaryDarkColor">#a30000</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
 </resources>
