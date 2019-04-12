@@ -20,8 +20,8 @@ public abstract class ReminderDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             ReminderDatabase.class, "reminder_database")
-//                            .addMigrations(MIGRATION_1_2)
-                            .fallbackToDestructiveMigration()
+                            .addMigrations(MIGRATION_1_2)
+//                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
