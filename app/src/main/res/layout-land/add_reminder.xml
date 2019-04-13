@@ -60,7 +60,6 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleInput">
-
         <!--Time-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/timeInput"
@@ -79,7 +78,6 @@
                 android:drawablePadding="2dp"
                 android:focusableInTouchMode="false"
                 android:inputType="none" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--Date-->
@@ -90,6 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="-14dp"
             android:layout_weight="1"
+            android:focusable="false"
             android:hint="@string/date_hint">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -139,11 +138,10 @@
         style="@style/Widget.RemindMe.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="328dp"
+        android:layout_marginEnd="6dp"
         android:text="@string/button_save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nestedScrollView" />
+        app:layout_constraintEnd_toEndOf="@+id/nestedScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel_button"

@@ -2,26 +2,28 @@ package com.jn769.remindmev2;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.button.MaterialButton;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 //import android.support.v7.app.NotificationCompat;
 
@@ -33,7 +35,6 @@ import java.util.Locale;
 public class AddReminder extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
         TimePickerDialog.OnTimeSetListener {
 
-    Context context;
     private ReminderViewModel reminderViewModel;
 
     private SimpleDateFormat dateFormatter;
@@ -63,27 +64,13 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
 
         reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel.class);
 
+        // Date and time
         dateFormatter = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
         timeFormatter = new SimpleDateFormat("h:mm a", Locale.US);
-
         calendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(
-                this,
-                AddReminder.this,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
-        timePickerDialog = new TimePickerDialog(
-                this,
-                AddReminder.this,
-                calendar.get(Calendar.HOUR),
-                calendar.get(Calendar.MINUTE),
-                false);
+        dateListener();
+        timeListener();
 
-        setUpDate();
-        setUpTime();
-
-        // Inflate the layout for this fragment
         titleInput = findViewById(R.id.titleInput);
         titleEditText = findViewById(R.id.titleEditText);
         timeEditText = findViewById(R.id.timeEditText);
@@ -119,10 +106,6 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         return text != null && text.length() >= 1;
     }
 
-
-    // TODO: Fix date input to not allow it to be persistently set after the first time.
-
-
     private void setReminderInfo() {
         reminderViewModel.insert(new Reminder(
                 String.valueOf(titleEditText.getText()),
@@ -131,24 +114,39 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
                 String.valueOf(descEditText.getText())));
     }
 
-    // Time setup
-    public void setUpTime() {
+    // Time Selection Listener
+    public void timeListener() {
         final TextInputEditText setTime = findViewById(R.id.timeEditText);
         setTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timePickerDialog.show();
+                setUpTime();
+
             }
         });
         setTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    timePickerDialog.show();
                 }
             }
         });
+    }
 
+    // Time setup
+    public void setUpTime() {
+        final TextInputEditText getTime = findViewById(R.id.timeEditText);
+        if (Objects.requireNonNull(getTime.getText()).length() > 0) {
+            timePickerDialog.show();
+        } else {
+            timePickerDialog = new TimePickerDialog(
+                    this,
+                    AddReminder.this,
+                    calendar.get(Calendar.HOUR),
+                    calendar.get(Calendar.MINUTE),
+                    false);
+            timePickerDialog.show();
+        }
     }
 
     public void onTimeSet(TimePicker timePicker,
@@ -162,25 +160,41 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         final TextInputEditText timeEditText = findViewById(R.id.timeEditText);
         String timeString = timeFormatter.format(time);
         timeEditText.setText(timeString);
+        timeEditText.setShowSoftInputOnFocus(false);
     }
 
-    // Date setup
-    public void setUpDate() {
+    // Date Selection Listener
+    public void dateListener() {
         final TextInputEditText setDate = findViewById(R.id.dateEditText);
         setDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePickerDialog.show();
+                setUpDate();
             }
         });
         setDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    datePickerDialog.show();
                 }
             }
         });
+    }
+
+    // Date setup
+    public void setUpDate() {
+        final TextInputEditText getDate = findViewById(R.id.dateEditText);
+        if (Objects.requireNonNull(getDate.getText()).length() > 0) {
+            datePickerDialog.show();
+        } else {
+            datePickerDialog = new DatePickerDialog(
+                    this,
+                    AddReminder.this,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show();
+        }
     }
 
     public void onDateSet(DatePicker datepicker,
@@ -210,60 +224,10 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         return (super.onOptionsItemSelected(menuItem));
     }
 
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
-//    public void scheduleNotification() {
-//
-//
-//        if (!reminder.getTime().equals("") && !reminder.getDate().equals("")) {
-//
-//            context = getApplicationContext();
-//
-//            mCalendarSet = Calendar.getInstance();
-//            mCalendarSet.setTimeInMillis(System.currentTimeMillis());
-//            mCalendarSet.set(Calendar.HOUR_OF_DAY, hour);
-//            mCalendarSet.set(Calendar.MINUTE, minute);
-//            mCalendarSet.set(Calendar.SECOND, seconds);
-//            Log.d("MCALENDAR--->", "hour: " + hour + '\n' + "minute: " + minute + '\n' + "seconds: " + seconds + '\n' + "year: " + mYear + '\n' + "month: " + mMonth + '\n' + "day: " + mDay);
-//            mCalendarSet.set(mYear, mMonth, mDay, hour, minute, seconds);
-//            Log.d("MCMillis", String.valueOf(mCalendarSet.getTimeInMillis()));
-//            Log.d("SystemMillis", String.valueOf(System.currentTimeMillis()));
-//
-//            notificationIntent = new Intent(context, Alarm.class);
-//
-////            notificationIntent.putExtra(Alarm.NOTIFICATION_ID, 1);
-////            notificationIntent.putExtra(Alarm.NOTIFICATION, notification());
-//
-//            pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//            alarmMgr.set(AlarmManager.RTC_WAKEUP, mCalendarSet.getTimeInMillis(), pendingIntent);
-//        } else {
-//            Log.d("No notification created", "Notify");
-//        }
-//
-//    }
-
-//    private Notification notification() {
-//        NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-//                .setSmallIcon(R.drawable.ic_add_alert_black_24dp)
-//                .setContentTitle(reminder.getTitle())
-//                .setContentText(reminder.getTime())
-//                .setSound(Uri.parse("content://settings/system/notification_sound"))
-//                .setAutoCancel(true);
-//        Log.d("Add Reminder", "------------>Created Notification<-------------");
-//
-//        resultIntent = new Intent(this, MainActivity.class);
-//        PendingIntent notifyPendingIntent =
-//                PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        builder.setContentIntent(notifyPendingIntent);
-//
-//        return builder.build();
-//
-//    }
 
 }
 

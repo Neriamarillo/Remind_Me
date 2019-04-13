@@ -1,10 +1,11 @@
 package com.jn769.remindmev2;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /*
  * Class performs the operations of the onClickListeners for the RecyclerView so we can add item

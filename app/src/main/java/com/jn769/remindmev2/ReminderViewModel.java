@@ -1,10 +1,11 @@
 package com.jn769.remindmev2;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 
 import java.util.List;
+
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 public class ReminderViewModel extends AndroidViewModel {
 

@@ -1,8 +1,8 @@
 package com.jn769.remindmev2;
 
-import android.arch.persistence.room.TypeConverter;
-
 import java.util.Date;
+
+import androidx.room.TypeConverter;
 
 public class DateConverter {
     @TypeConverter

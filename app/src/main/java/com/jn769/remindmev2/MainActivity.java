@@ -1,18 +1,22 @@
 package com.jn769.remindmev2;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Jorge Nieves
@@ -64,8 +68,19 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onLongClick(View view, int position) {
-                        reminderViewModel.deleteReminder(position);
+                    public void onLongClick(View view, final int position) {
+                        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(MainActivity.this);
+                        deleteDialog
+                                .setTitle("Confirm Delete")
+                                .setMessage("Are you sure you want to delete this reminder?")
+                                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        reminderViewModel.deleteReminder(position);
+                                    }
+                                })
+                                .setNegativeButton("Cancel", null)
+                                .show();
                     }
                 }));
 

@@ -1,6 +1,6 @@
 package com.jn769.remindmev2;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by Jorge Nieves on 3/26/19.
