@@ -1,0 +1,100 @@
+<resources>
+
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--<style name="Theme.RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+    <!--<item name="colorPrimary">@color/primaryColor</item>-->
+    <!--<item name="colorPrimaryVariant">@color/primaryDarkColor</item>-->
+    <!--<item name="colorOnPrimary">@color/primaryTextColor</item>-->
+    <!--<item name="colorSecondary">@color/secondaryColor</item>-->
+    <!--<item name="colorSecondaryVariant">@color/secondaryDarkColor</item>-->
+    <!--<item name="colorOnSecondary">@color/secondaryTextColor</item>-->
+    <!--<item name="colorAccent">@color/secondaryColor</item>-->
+    <!--<item name="colorError">#F44336</item>-->
+    <!--<item name="colorOnError">#FFFFFF</item>-->
+    <!--<item name="colorSurface">@color/primaryLightColor</item>-->
+    <!--<item name="colorOnSurface">@color/primaryTextColor</item>-->
+    <!--<item name="android:colorBackground">@color/background</item>-->
+    <!--<item name="colorOnBackground">#212121</item>-->
+    <!--<item name="android:statusBarColor">@color/primaryDarkColor</item>-->
+    <!--<item name="android:textColorPrimary">@color/primaryTextColor</item>-->
+    <!--<item name="android:textColor">@color/primaryTextColor</item>-->
+    <!--<item name="android:textColorSecondary">@color/secondaryTextColor</item>-->
+    <!--<item name="textInputStyle">@style/RemindMe.TextInputLayout.OutlinedBox</item>-->
+    <!--&lt;!&ndash;Must haves&ndash;&gt;-->
+    <!--<item name="scrimBackground">@color/mtrl_scrim_color</item>-->
+    <!--<item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1</item>-->
+    <!--<item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2</item>-->
+    <!--<item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3</item>-->
+    <!--<item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4</item>-->
+    <!--<item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5</item>-->
+    <!--<item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6</item>-->
+    <!--<item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1</item>-->
+    <!--<item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2</item>-->
+    <!--<item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>-->
+    <!--<item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>-->
+    <!--<item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>-->
+    <!--<item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>-->
+    <!--<item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>-->
+    <!--</style>-->
+    <!--&lt;!&ndash;Only for allowing statusbar icons to be dark&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:windowLightStatusBar" tools:targetApi="m">true</item>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;Old Theming&ndash;&gt;-->
+    <!--&lt;!&ndash;<style name="Theme.RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:colorPrimary">@color/primaryColor</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:colorPrimaryDark">@color/primaryDarkColor</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:colorAccent">@color/secondaryColor</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:textColorPrimary">@color/primaryTextColor</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:textColor">@color/secondaryTextColor</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:windowBackground">@color/background</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:windowLightStatusBar" tools:targetApi="m">true</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;</style>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<style name="Theme.RemindMe.Dark" parent="Theme.MaterialComponents.NoActionBar">&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</style>&ndash;&gt;-->
+
+    <!--<style name="Widget.RemindMe.Toolbar" parent="Widget.AppCompat.Toolbar">-->
+    <!--<item name="android:theme">@style/Theme.RemindMe</item>-->
+    <!--<item name="titleTextAppearance">@style/TextAppearance.RemindMe.Toolbar</item>-->
+    <!--<item name="titleTextColor">@color/primaryTextColor</item>-->
+    <!--<item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>-->
+    <!--</style>-->
+
+    <!--<style name="TextAppearance.RemindMe.Toolbar" parent="TextAppearance.MaterialComponents.Button">-->
+    <!--<item name="android:textSize">18sp</item>-->
+    <!--</style>-->
+
+    <!--<style name="Widget.RemindMe.Button" parent="Widget.MaterialComponents.Button">-->
+    <!--<item name="android:textColor">@color/secondaryTextColor</item>-->
+    <!--<item name="backgroundTint">@color/secondaryColor</item>-->
+    <!--</style>-->
+
+    <!--<style name="Widget.RemindMe.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">-->
+    <!--<item name="android:textColor">@color/primaryTextColor</item>-->
+    <!--</style>-->
+
+    <!--<style name="Widget.RemindMe.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">-->
+    <!--<item name="hintTextAppearance">@style/TextAppearance.RemindMe.TextInputLayout.HintText-->
+    <!--</item>-->
+    <!--<item name="android:paddingBottom">8dp</item>-->
+
+    <!--</style>-->
+
+    <!--<style name="TextAppearance.RemindMe.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">-->
+    <!--<item name="android:textColorHint">@color/primaryTextColor</item>-->
+
+    <!--</style>-->
+
+    <!--<style name="Widget.RemindMe.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">-->
+    <!--<item name="android:colorAccent">@color/secondaryColor</item>-->
+    <!--</style>-->
+
+    <!--<style name="RemindMe.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+    <!--&lt;!&ndash;<item name="boxStrokeColor">@color/secondaryColor</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="hintTextColor">@color/secondaryColor</item>&ndash;&gt;-->
+    <!--<item name="hintTextAppearance">@style/TextAppearance.RemindMe.TextInputLayout.HintText-->
+    <!--</item>-->
+    <!--</style>-->
+
+</resources>
