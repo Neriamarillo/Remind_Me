@@ -1,7 +1,5 @@
 package com.jn769.remindmev2;
 
-import java.util.List;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -9,6 +7,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import java.util.List;
 
 @Dao
 public interface ReminderDao {
@@ -29,6 +29,6 @@ public interface ReminderDao {
     LiveData<List<Reminder>> getAllReminders();
 
     @Query("SELECT * FROM reminders WHERE id = :id")
-    Reminder getReminder(int id);
+    LiveData<Reminder> getReminder(int id);
 
 }

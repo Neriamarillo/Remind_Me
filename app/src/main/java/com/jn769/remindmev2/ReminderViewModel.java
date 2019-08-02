@@ -2,10 +2,11 @@ package com.jn769.remindmev2;
 
 import android.app.Application;
 
-import java.util.List;
-
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import java.util.List;
+import java.util.Objects;
 
 public class ReminderViewModel extends AndroidViewModel {
 
@@ -26,13 +27,18 @@ public class ReminderViewModel extends AndroidViewModel {
         reminderRepository.insert(reminder);
     }
 
-    public void deleteReminder(final int position) {
+    void deleteReminder(final int position) {
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                reminderRepository.delete(reminderList.getValue().get(position));
+                reminderRepository.delete(Objects.requireNonNull(reminderList.getValue()).get(position));
             }
         });
         thread.start();
     }
+
+    void update(Reminder reminder) {
+        reminderRepository.update(reminder);
+    }
+
 
 }

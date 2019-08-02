@@ -1,39 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="colorPrimary">#3F51B5</color>-->
-    <!--<color name="colorPrimaryDark">#303f9f</color>-->
-    <!--<color name="colorAccent">#d50000</color>-->
 
-    <color name="material_red">#d50000</color>
-    <color name="black_semi_transparent">#B2000000</color>
-    <color name="background">#e5e5e5</color>
-    <color name="half_black">#808080</color>
-    <color name="white">#ffffff</color>
-    <color name="white_pressed">#f1f1f1</color>
-    <color name="pink">#e91e63</color>
-    <color name="pink_pressed">#ec407a</color>
-    <color name="blue_semi_transparent">#805677fc</color>
-    <color name="blue_semi_transparent_pressed">#80738ffe</color>
+    <!--Gray Theme-->
+    <!--<color name="primaryColor">#455a64</color>-->
+    <!--<color name="primaryLightColor">#718792</color>-->
+    <!--<color name="primaryDarkColor">#1c313a</color>-->
+    <!--<color name="secondaryColor">#ffd600</color>-->
+    <!--<color name="secondaryLightColor">#ffff52</color>-->
+    <!--<color name="secondaryDarkColor">#c7a500</color>-->
+    <!--<color name="primaryTextColor">#ffffff</color>-->
+    <!--<color name="secondaryTextColor">#ffffff</color>-->
+    <!--<color name="background">#ffffff</color>-->
 
-    <!--<color name="accent_dark">#ff2929</color>-->
-    <!--<color name="accent">#ff5252</color>-->
-    <!--<color name="secondary_text">#727272</color>-->
-    <!---->
-    <color name="white_overlay">#00f3f3f3</color>
+    <!--Baseline Android Theme-->
+    <!--<color name="primaryColor">#6200EE</color>-->
+    <!--<color name="primaryLightColor">#ffffff</color>-->
+    <!--<color name="primaryDarkColor">#3700B3</color>-->
+    <!--<color name="secondaryColor">#03DAC6</color>-->
+    <!--<color name="secondaryLightColor">#f05545</color>-->
+    <!--<color name="secondaryDarkColor">#018786</color>-->
+    <!--<color name="primaryTextColor">#000000</color>-->
+    <!--<color name="secondaryTextColor">#ffffff</color>-->
+    <!--<color name="background">#FFFFFF</color>-->
+    <!--<color name="surface">#FFFFFF</color>-->
+    <!--<color name="error">#B00020</color>-->
+
+    <!--Red on Red-->
+    <!--<color name="primaryColor">#db3226</color>-->
+    <!--<color name="primaryLightColor">#ffffff</color>-->
+    <!--<color name="primaryDarkColor">#a10000</color>-->
+    <!--<color name="secondaryColor">#b81f1c</color>-->
+    <!--<color name="secondaryLightColor">#f15745</color>-->
+    <!--<color name="secondaryDarkColor">#800000</color>-->
+    <!--<color name="primaryTextColor">#000000</color>-->
+    <!--<color name="secondaryTextColor">#ffffff</color>-->
+    <!--<color name="background">#FFFFFF</color>-->
+    <!--<color name="surface">#FFFFFF</color>-->
+    <!--<color name="error">#B00020</color>-->
+
+    <!--Grey Red A-->
+    <!--<color name="primaryColor">#546e7a</color>-->
+    <!--<color name="primaryLightColor">#FFFFFF</color>-->
+    <!--<color name="primaryDarkColor">#29434e</color>-->
+    <!--<color name="secondaryColor">#d32f2f</color>-->
+    <!--<color name="secondaryLightColor">#ff6659</color>-->
+    <!--<color name="secondaryDarkColor">#9a0007</color>-->
+    <!--<color name="primaryTextColor">#000000</color>-->
+    <!--<color name="secondaryTextColor">#ffffff</color>-->
+    <!--<color name="background">#FFFFFF</color>-->
+    <!--<color name="surface">#FFFFFF</color>-->
+    <!--<color name="error">#B00020</color>-->
+
+    <!--<color name="primaryTextColor">#000000</color>-->
+
+    <!--White (gray) | Red Theme-->
+    <!--<color name="primaryColor">#cfd8dc</color>-->
+    <!--<color name="primaryLightColor">#ffffff</color>-->
+    <!--<color name="primaryDarkColor">#9ea7aa</color>-->
+    <color name="primaryColor">#ffffff</color>
+    <color name="primaryLightColor">#ffffff</color>
+    <color name="primaryDarkColor">#cccccc</color>
+    <color name="secondaryColor">#b71c1c</color>
+    <color name="secondaryLightColor">#f05545</color>
+    <color name="secondaryDarkColor">#7f0000</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
+    <!--<color name="background">#FFFFFF</color>-->
+    <color name="background">#FFFFFF</color>
+    <color name="error">#B00020</color>
+
+    <!--Dark Theme-->
+    <color name="primaryColorDark">#212121</color>
+    <color name="primaryLightColorDark">#484848</color>
+    <color name="primaryDarkColorDark">#000000</color>
+    <color name="secondaryColorDark">#b71c1c</color>
+    <color name="secondaryLightColorDark">#f05545</color>
+    <color name="secondaryDarkColorDark">#7f0000</color>
+    <color name="primaryTextColorDark">#ffffff</color>
+    <color name="secondaryTextColorDark">#ffffff</color>
+    <color name="backgroundDark">#000000</color>
+
+    <!--Red Main Theme-->
+    <!--<color name="primaryColor">#d32f2f</color>-->
+    <!--<color name="primaryLightColor">#ffffff</color>-->
+    <!--<color name="primaryDarkColor">#9a0007</color>-->
+    <!--<color name="secondaryColor">#fafafa</color>-->
+    <!--<color name="secondaryLightColor">#ffffff</color>-->
+    <!--<color name="secondaryDarkColor">#c7c7c7</color>-->
+    <!--<color name="primaryTextColor">#FFFFFF</color>-->
+    <!--<color name="secondaryTextColor">#000000</color>-->
+    <!--<color name="background">#FFFFFF</color>-->
+    <!--<color name="error">#B00020</color>-->
+
+    <!--Test Theme-->
+    <!--<color name="primaryColor">#37474f</color>-->
+    <!--<color name="primaryLightColor">#62727b</color>-->
+    <!--<color name="primaryDarkColor">#102027</color>-->
+    <!--<color name="secondaryColor">#ffa000</color>-->
+    <!--<color name="secondaryLightColor">#ffd149</color>-->
+    <!--<color name="secondaryDarkColor">#c67100</color>-->
+    <!--<color name="primaryTextColor">#ffffff</color>-->
+    <!--<color name="secondaryTextColor">#000000</color>-->
+
+    <!--White/Black Theme-->
+    <!--<color name="primaryColor">#ffffff</color>-->
+    <!--<color name="primaryLightColor">#ffffff</color>-->
+    <!--<color name="primaryDarkColor">#cccccc</color>-->
+    <!--<color name="secondaryColor">#000000</color>-->
+    <!--<color name="secondaryLightColor">#2c2c2c</color>-->
+    <!--<color name="secondaryDarkColor">#000000</color>-->
+    <!--<color name="primaryTextColor">#000000</color>-->
+    <!--<color name="secondaryTextColor">#ffffff</color>-->
+
+    <!--Dark Grey | Yellow-->
     <!--<color name="primaryColor">#546e7a</color>-->
     <!--<color name="primaryLightColor">#819ca9</color>-->
     <!--<color name="primaryDarkColor">#29434e</color>-->
-    <!--<color name="secondaryColor">#dd2c00</color>-->
-    <!--<color name="secondaryLightColor">#ff6434</color>-->
-    <!--<color name="secondaryDarkColor">#a30000</color>-->
+    <!--<color name="secondaryColor">#ffd600</color>-->
+    <!--<color name="secondaryLightColor">#ffff52</color>-->
+    <!--<color name="secondaryDarkColor">#c7a500</color>-->
     <!--<color name="primaryTextColor">#ffffff</color>-->
-    <!--<color name="secondaryTextColor">#ffffff</color>-->
-    <color name="primaryColor">#546e7a</color>
-    <color name="primaryLightColor">#819ca9</color>
-    <color name="primaryDarkColor">#29434e</color>
-    <color name="secondaryColor">#dd2c00</color>
-    <color name="secondaryLightColor">#ff6434</color>
-    <color name="secondaryDarkColor">#a30000</color>
-    <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#ffffff</color>
+    <!--<color name="secondaryTextColor">#000000</color>-->
 </resources>

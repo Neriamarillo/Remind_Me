@@ -1,7 +1,5 @@
 package com.jn769.remindmev2;
 
-import java.util.Date;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
@@ -32,17 +30,22 @@ public class Reminder {
     @ColumnInfo(name = "date")
     @TypeConverters(DateConverter.class)
     @Nullable
-    private Date date;
+    private String date;
 
     @ColumnInfo(name = "description")
     @Nullable
     private String description;
 
+    @ColumnInfo(name = "alarmId")
+    @Nullable
+    private int alarmId;
+
+    @Ignore
     public Reminder() {
     }
 
-    @Ignore
-    public Reminder(int id, String title, String time, Date date, String description) {
+
+    public Reminder(int id, String title, String time, String date, String description) {
         this.id = id;
         this.title = title;
         this.time = time;
@@ -50,19 +53,33 @@ public class Reminder {
         this.description = description;
     }
 
-    public Reminder(String title, String time, Date date, String description) {
+    @Ignore
+    public Reminder(String title, String time, String date, String description, int alarmId) {
         this.title = title;
         this.time = time;
         this.date = date;
         this.description = description;
+        this.alarmId = alarmId;
     }
 
+    @Ignore
     public Reminder(Reminder reminder) {
         this.id = reminder.getId();
         this.title = reminder.getTitle();
         this.time = reminder.getTime();
         this.date = reminder.getDate();
         this.description = reminder.getDescription();
+    }
+
+
+    @Ignore
+    public Reminder(int id, String title, String time, String date, String description, int alarmId) {
+        this.id = id;
+        this.title = title;
+        this.time = time;
+        this.date = date;
+        this.description = description;
+        this.alarmId = alarmId;
     }
 
     public int getId() {
@@ -89,11 +106,11 @@ public class Reminder {
         this.time = _time;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date _date) {
+    public void setDate(String _date) {
         this.date = _date;
     }
 
@@ -104,5 +121,14 @@ public class Reminder {
     public void setDescription(String _description) {
         this.description = _description;
     }
+
+    public int getAlarmId() {
+        return alarmId;
+    }
+
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
+    }
+
 
 }

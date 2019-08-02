@@ -1,22 +1,35 @@
 package com.jn769.remindmev2;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jorge Nieves
@@ -25,13 +38,75 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 
 public class MainActivity extends AppCompatActivity {
+    private static final String CHANNEL_ID = "Reminders";
+//    private static final int NOTIFICATION_ID = 0;
 
     private ReminderViewModel reminderViewModel;
+    private ReminderViewAdapter adapter;
+
+    private FloatingActionButton fab;
+
+    private DrawerLayout dl;
+    private ActionBarDrawerToggle t;
+    private NavigationView nv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        final Toolbar toolbar = findViewById(R.id.app_bar);
+        toolbar.setTitle(R.string.app_title);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+        setSupportActionBar(toolbar);
+
+        // Init Notification Channel
+        createNotificationChannel();
+
+        // Drawer
+        dl = findViewById(R.id.activity_main);
+        t = new ActionBarDrawerToggle(this, dl, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        dl.addDrawerListener(t);
+        t.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        nv = findViewById(R.id.navigation_view);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch (id) {
+                    case R.id.account:
+                        Toast.makeText(MainActivity.this, "My Account", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.settings:
+                        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(settingsIntent);
+//                        Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.mycart:
+                        Toast.makeText(MainActivity.this, "My Cart", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        return true;
+                }
+
+
+                return true;
+
+            }
+        });
+
+
+//        Toolbar toolbar = findViewById(R.id.app_bar);
+//        setSupportActionBar(toolbar);
 
         // Old fragment code
 //        if (savedInstanceState == null) {
@@ -41,11 +116,37 @@ public class MainActivity extends AppCompatActivity {
 //                    .commit();
 //        }
 
-        // Swt up RecyclerView
+        // FAB code
+        fab = findViewById(R.id.main_add_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // AddReminderFragment Test code
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.container, new AddReminderFragment())
+//                        .addToBackStack(null)
+//                        .commitAllowingStateLoss();
+
+//                AddReminderFragment mDialog = new AddReminderFragment();
+//                mDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullscreenDialog);
+//                mDialog.show(getSupportFragmentManager(), "DialogFragment");
+
+
+//                Code for AddReminder Activity
+
+                startRevealAdd(view);
+//                fab.hide();
+
+//                Intent intent = new Intent(MainActivity.this, AddReminder.class);
+//                startActivity(intent);
+            }
+        });
 
         // RecyclerView initialization
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        final ReminderViewAdapter adapter = new ReminderViewAdapter(new ArrayList<Reminder>());
+        final RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        adapter = new ReminderViewAdapter(new ArrayList<Reminder>());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -63,15 +164,59 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView,
                 new RecyclerTouchListener.ClickListener() {
                     @Override
-                    public void onClick(View view, int position) {
+                    public void onClick(View view, final int position) {
+//                        MaterialAlertDialogBuilder viewReminderDialog = new MaterialAlertDialogBuilder(MainActivity.this);
+//                        final ReminderViewAdapter dialogAdapter = new ReminderViewAdapter(new ArrayList<Reminder>());
+//                        recyclerView.setAdapter(adapter);
 
+
+//                        TEMPORARY
+//                        MaterialAlertDialogBuilder deleteDialog = new MaterialAlertDialogBuilder(MainActivity.this, R.style.RemindMe_AlertDialog);
+//                        deleteDialog
+//                                .setTitle(R.string.confirm_delete)
+//                                .setMessage("Are you sure you want to delete this reminder?")
+//                                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        reminderViewModel.deleteReminder(position);
+//                                    }
+//                                })
+//                                .setNegativeButton("Cancel", null)
+//                                .show();
+
+
+                        Log.d("Item ID", String.valueOf(position));
+                        startRevealEdit(view, adapter.getReminder(position).getId());
+
+
+//                        TEMPORARY
+
+
+//                        editReminder(position);
+
+//                        AddReminderFragment mDialog = new AddReminderFragment();
+//                mDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_MaterialComponents_Dialog);
+//                mDialog.show(getSupportFragmentManager(), "DialogFragment");
+
+
+//
+//                        viewReminderDialog
+//                                .setView(R.layout.edit_reminder_dialog)
+//                                .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//
+//                                    }
+//                                }) // change listener
+//                                .setNegativeButton("Cancel", null)
+//                                .show();
                     }
 
                     @Override
                     public void onLongClick(View view, final int position) {
-                        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(MainActivity.this);
+                        MaterialAlertDialogBuilder deleteDialog = new MaterialAlertDialogBuilder(MainActivity.this, R.style.RemindMe_AlertDialog);
                         deleteDialog
-                                .setTitle("Confirm Delete")
+                                .setTitle(R.string.confirm_delete)
                                 .setMessage("Are you sure you want to delete this reminder?")
                                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                     @Override
@@ -84,16 +229,27 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
 
-        // FAB code
-        FloatingActionButton fab = findViewById(R.id.main_add_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            Toolbar toolbar = findViewById(R.id.app_bar);
+
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddReminder.class);
-                startActivity(intent);
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
+                super.onScrolled(recyclerView, dx, dy);
+
+//                if (!recyclerView.canScrollVertically(-1)) {
+//                    // we have reached the top of the list
+//                    toolbar.setElevation(0);
+//                } else {
+//                    // we are not at the top yet
+//                    toolbar.setElevation(50);
+//                }
             }
         });
-
 
 //      DRAWER
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -114,21 +270,152 @@ public class MainActivity extends AppCompatActivity {
 
 //      FIRST TIME DIALOG
 
-    }
-
-    // NavigationHost code for fragments
-//    @Override
-//    public void navigateTo(Fragment fragment, boolean addToBackstack) {
-//        FragmentTransaction transaction =
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.container, fragment);
-//
-//        if (addToBackstack) {
-//            transaction.addToBackStack(null);
+//        // DRAWER
+//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        assert drawer != null;
+//        toggle.syncState();
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            fab.hide();
+//        } else {
+//            fab.show();
 //        }
 //
-//        transaction.commit();
+////      NAV
+//        NavigationView navigationView = findViewById(R.id.navigation_view);
+//        assert navigationView != null;
+//        navigationView.setNavigationItemSelectedListener(this);
+
+
+    }
+
+    private void startRevealAdd(View v) {
+        //calculates the center of the View v you are passing
+        int revealX = (int) (v.getX() + v.getWidth() / 2);
+        int revealY = (int) (v.getY() + v.getHeight() / 2);
+
+        //create an intent, that launches the second activity and pass the x and y coordinates
+        Intent intent = new Intent(this, AddReminder.class);
+        intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_X, revealX);
+        intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_Y, revealY);
+
+        //just start the activity as an shared transition, but set the options bundle to null
+        ActivityCompat.startActivity(this, intent, null);
+
+        //to prevent strange behaviours override the pending transitions
+        overridePendingTransition(0, 0);
+    }
+
+    private void startRevealEdit(View v, int id) {
+        //calculates the center of the View v you are passing
+        int revealX = (int) (v.getX() + v.getWidth() / 2);
+        int revealY = (int) (v.getY() + v.getHeight() / 2);
+
+        //create an intent, that launches the second activity and pass the x and y coordinates
+        Intent intent = new Intent(this, EditReminder.class);
+        intent.putExtra("REMINDER_ID", id);
+        intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_X, revealX);
+        intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_Y, revealY);
+
+        //just start the activity as an shared transition, but set the options bundle to null
+        ActivityCompat.startActivity(this, intent, null);
+
+        //to prevent strange behaviours override the pending transitions
+        overridePendingTransition(0, 0);
+    }
+
+    private void startRevealSettings(View v) {
+        //calculates the center of the View v you are passing
+        int revealX = (int) (v.getX() + v.getWidth() / 2);
+        int revealY = (int) (v.getY() + v.getHeight() / 2);
+
+        //create an intent, that launches the second activity and pass the x and y coordinates
+        Intent intent = new Intent(this, SettingsActivity.class);
+        intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_X, revealX);
+        intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_Y, revealY);
+
+        //just start the activity as an shared transition, but set the options bundle to null
+        ActivityCompat.startActivity(this, intent, null);
+
+        //to prevent strange behaviours override the pending transitions
+        overridePendingTransition(0, 0);
+    }
+
+//    private void editReminder(final int position) {
+////        LayoutInflater inflater = LayoutInflater.from(this);
+////        final View addView = inflater.inflate(R.layout.edit_reminder_dialog, null);
+//
+//        /*Hidden for testing*/
+////        TextInputEditText titleEditText = addView.findViewById(R.id.titleEditText);
+////        TextInputEditText timeEditText = addView.findViewById(R.id.timeEditText);
+////        TextInputEditText dateEditText = addView.findViewById(R.id.dateEditText);
+////        TextInputEditText descEditText = addView.findViewById(R.id.descEditText);
+//
+//
+////        new MaterialAlertDialogBuilder(MainActivity.this, R.style.ReminderDialog)
+////                .setView(addView)
+////                .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+////                    @Override
+////                    public void onClick(DialogInterface dialog, int which) {
+////
+//////                        Intent editIntent = new Intent(this, EditReminder.class);
+////////                        Intent editIntent = new Intent(this, EditReminder.class)
+//////
+////////                        Reminder reminder = new Reminder();
+////////                        reminder = adapter.getReminder(position);
+//////                        // 3. put person in intent data
+//////                        editIntent.putExtra("reminder", position);
+//////                        // 4. start the activity
+//////                        startActivity(editIntent);
+////                        sendReminder(addView, position);
+////                    }
+////                }) // change listener
+////                .setNegativeButton("Cancel", null)
+////                .show();
+//
+//
+////        titleEditText.setText(adapter.getReminder(position).getTitle());
+////        timeEditText.setText(adapter.getReminder(position).getTime());
+////        dateEditText.setText(adapter.getReminder(position).getDate() != null ?
+////                adapter.getReminder(position).getDate().toString().substring(0, 11) : null);
+////        descEditText.setText(adapter.getReminder(position).getDescription());
+//        /*Hidden for testing*/
+//
+//        String title = adapter.getReminder(position).getTitle();
+//        String time = adapter.getReminder(position).getTime();
+//        String date = adapter.getReminder(position).getDate() != null ?
+//                adapter.getReminder(position).getDate().toString().substring(0, 11) : null;
+//        String descript = adapter.getReminder(position).getDescription();
+//
+//        Bundle extras = new Bundle();
+//        extras.putString("TITLE", title);
+//        extras.putString("TIME", time);
+//        extras.putString("DATE", date);
+//        extras.putString("DESC", descript);
+//
+//        Intent intent = new Intent(this, EditReminder.class);
+//        intent.putExtras(extras);
+//        startActivity(intent);
+//
+//    }
+
+    //WORKING
+//    public void sendReminder(View view, int position) {
+//        Intent editIntent = new Intent(this, EditReminder.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putInt(EDIT_MESSAGE, position);
+//        editIntent.putExtras(bundle);
+////        editIntent.putExtra(EDIT_MESSAGE, position);
+//        startActivity(editIntent);
+//    }
+
+    // Send Id of the item clicked to EditReminder Class
+//    public void sendReminder(int id, View view) {
+//        Intent intent = new Intent(this, EditReminder.class);
+//        intent.putExtra("REMINDER_ID", id);
+//        startRevealEdit(view);
+////        startActivity(intent);
 //    }
 
 //    @Override
@@ -162,21 +449,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        fab.show();
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        dataList.clear();
-//        dataList = db.getAllReminders();
-//        adapter = new ReminderViewAdapter(dataList);
-//        recyclerView.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-//    }
 
     @Override
     public void onPause() {
         super.onPause();
+        fab.hide();
     }
 
     @Override
@@ -189,51 +468,73 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        assert drawer != null;
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-//
-//        adapter.notifyDataSetChanged();
-//    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        assert drawer != null;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (t.onOptionsItemSelected(item))
+            return true;
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Reminders";
+            String description = "Reminder notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 //    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //        // Handle navigation view item clicks here.
 //        int id = item.getItemId();
 ////        String className;
 //        Intent menuIntent;
 //
-//        if (id == R.id.nav_reminders) {
-//            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//            assert drawer != null;
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else if (id == R.id.nav_settings) {
-//            menuIntent = new Intent(this, SettingsActivity.class);
-//            startActivity(menuIntent);
-//        } else if (id == R.id.nav_rate) {
-//            Uri uri = Uri.parse("market://details?id=" + "com.jn769.remindme");
-//            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-//            // To count with Play market backstack, After pressing back button,
-//            // to taken back to our application, we need to add following flags to intent.
-//            goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-//                    Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
-//                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-//            try {
-//                startActivity(goToMarket);
-//            } catch (ActivityNotFoundException e) {
-//                startActivity(new Intent(Intent.ACTION_VIEW,
-//                        Uri.parse("http://play.google.com/store/apps/details?id=" + "com.jn769.remindme")));
-//            }
-//
-//        } else if (id == R.id.nav_feedback) {
-//            sendEmail();
-//        }
+////        if (id == R.id.nav_reminders) {
+////            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+////            assert drawer != null;
+////            drawer.closeDrawer(GravityCompat.START);
+////        } else if (id == R.id.nav_settings) {
+////            menuIntent = new Intent(this, SettingsActivity.class);
+////            startActivity(menuIntent);
+////        }
+////        } else if (id == R.id.nav_rate) {
+////            Uri uri = Uri.parse("market://details?id=" + "com.jn769.remindme");
+////            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+////            // To count with Play market backstack, After pressing back button,
+////            // to taken back to our application, we need to add following flags to intent.
+////            goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+////                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+////            try {
+////                startActivity(goToMarket);
+////            } catch (ActivityNotFoundException e) {
+////                startActivity(new Intent(Intent.ACTION_VIEW,
+////                        Uri.parse("http://play.google.com/store/apps/details?id=" + "com.jn769.remindme")));
+////            }
+////
+////        }
+////        } else if (id == R.id.nav_feedback) {
+////            sendEmail();
+////        }
 //
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        assert drawer != null;
@@ -262,5 +563,20 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
+
+/*
+* CODE FOR NOTIFICATION SETTINGS INSIDE SETTINGS APP -> INSIDE SETTINGS APP
+* //            INTENT FOR NOTIFICATION SETTINGS
+
+//            Intent notifIntent = null;
+//            notifIntent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+//            notifIntent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+//            notifIntent.putExtra(Settings.EXTRA_CHANNEL_ID, groupId);
+//            startActivity(notifIntent);
+*
+* */
+
+
+//
 }
 

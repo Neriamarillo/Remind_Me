@@ -46,6 +46,7 @@
         <item>-1</item>
     </string-array>
 
+    <string name="app_name">Remind Me</string>
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
@@ -78,6 +79,8 @@
     <string name="drawerGroupTitle">Info</string>
     <string name="listimg">listImg</string>
 
+    <string name="updated_reminder">Reminder Updated</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_save">Save</string>
@@ -88,4 +91,26 @@
     <string name="description_hint">Description</string>
     <string name="concatDescription">…</string>
     <string name="empty_recyclerlist">No Reminders!</string>
+    <string name="button_edit">Edit</string>
+    <string name="title_view_reminder">View Reminder</string>
+    <string name="title_edit_reminder">Edit Reminder</string>
+    <string name="confirm_delete">CONFIRM DELETE</string>
+    <string name="notification_checkbox">Notification</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="settings_title">Settings</string>
+
 </resources>

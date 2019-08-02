@@ -1,160 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/addReminder"
+    style="@style/RemindMe.Fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddReminder">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/app_bar"
-            style="@style/Widget.RemindMe.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:paddingLeft="12dp"
-            android:paddingEnd="12dp"
-            android:paddingRight="12dp"
-            app:title="@string/title_activity_add_reminder" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-
-    <!--Title-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/titleInput"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="12dp"
-        android:hint="@string/title_hint"
-        app:helperTextEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/titleEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:id="@+id/timeDateLand"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInput">
-        <!--Time-->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/timeInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:hint="@string/time_hint">
+        android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/timeEditText"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/editAppBarLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/app_bar_fragment"
+                style="@style/Dialog.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_access_time_black_24dp"
-                android:drawablePadding="2dp"
-                android:focusableInTouchMode="false"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:paddingStart="2dp"
+                android:paddingLeft="12dp"
+                android:paddingEnd="12dp"
+                android:paddingRight="12dp" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <!--Date-->
+
+        <!--Title-->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dateInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+            android:id="@+id/titleInput"
+            style="@style/RemindMe.TextInputEditText.Filledbox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-14dp"
-            android:layout_weight="1"
-            android:focusable="false"
-            android:hint="@string/date_hint">
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:hint="@string/title_hint"
+            app:helperTextEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editAppBarLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dateEditText"
+                android:id="@+id/titleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_today_black_24dp"
-                android:drawablePadding="2dp"
-                android:focusableInTouchMode="false"
-                android:inputType="none" />
+                android:inputType="textCapSentences" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
-
-    <!--Description-->
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeDateLand">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/descInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
+            android:id="@+id/timeDateLand"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/description_hint">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleInput">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/descEditText"
+            <!--Time-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/timeInput"
+                style="@style/RemindMe.TextInputEditText.Filledbox"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:inputType="textMultiLine|textCapSentences" />
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:hint="@string/time_hint">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/timeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_access_time_black_24dp"
+                    android:drawablePadding="4dp"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none" />
 
-    </androidx.core.widget.NestedScrollView>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <!--Save/Cancel Buttons-->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/save_button"
-        style="@style/Widget.RemindMe.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="6dp"
-        android:text="@string/button_save"
-        app:layout_constraintEnd_toEndOf="@+id/nestedScrollView"
-        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
+            <!--Date-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dateInput"
+                style="@style/RemindMe.TextInputEditText.Filledbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-14dp"
+                android:layout_weight="1"
+                android:hint="@string/date_hint">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/cancel_button"
-        style="@style/Widget.RemindMe.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:text="@string/button_cancel"
-        app:layout_constraintEnd_toStartOf="@+id/save_button"
-        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dateEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_today_black_24dp"
+                    android:drawablePadding="4dp"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <!--Description-->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeDateLand">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/descInput"
+                style="@style/RemindMe.TextInputEditText.Filledbox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/description_hint"
+                app:counterEnabled="true"
+                app:counterMaxLength="300">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/descEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:gravity="start"
+                    android:inputType="textMultiLine|textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <!--Save/Cancel Buttons-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save_button"
+            style="@style/Widget.RemindMe.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="328dp"
+            android:text="@string/button_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nestedScrollView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_button"
+            style="@style/Widget.RemindMe.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="@string/button_cancel"
+            app:layout_constraintEnd_toStartOf="@+id/save_button"
+            app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>
 
 
+    <!--style="@style/Widget.RemindMe.Button"-->
+
+
+    <!--style="@style/Widget.RemindMe.Button.TextButton"-->
 

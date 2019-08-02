@@ -1,52 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
+    <!--APP THEME-->
     <style name="Theme.RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorPrimary">@color/secondaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
         <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/primaryColor</item>
+        <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorSurface">@color/primaryLightColor</item>
+        <item name="colorOnSurface">@color/primaryTextColor</item>
+        <item name="android:colorBackground">@color/primaryLightColor</item>
+        <item name="colorOnBackground">@color/primaryColor</item>
+        <item name="android:statusBarColor">@color/primaryDarkColor</item>
+        <item name="colorControlActivated">@color/secondaryColor</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
-    <style name="Theme.RemindMe.Dark" parent="Theme.MaterialComponents.NoActionBar">
-
-    </style>
-
-    <style name="Widget.RemindMe.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">@color/primaryColor</item>
+    <!--Main Toolbar-->
+    <style name="Main.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:theme">@style/Theme.RemindMe</item>
-        <item name="titleTextAppearance">@style/TextAppearance.RemindMe.Toolbar</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Toolbar</item>
         <item name="titleTextColor">@color/primaryTextColor</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="android:background">@color/primaryColor</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:elevation">10dp</item>
     </style>
 
-    <style name="TextAppearance.RemindMe.Toolbar" parent="TextAppearance.MaterialComponents.Button">
+    <!--Dialog Toolbar-->
+    <style name="Dialog.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextAppearance">@style/TextAppearance.Toolbar</item>
+        <item name="titleTextColor">@color/primaryTextColor</item>
+        <item name="android:background">@color/primaryLightColor</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+    </style>
+
+    <style name="TextAppearance.Toolbar" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textSize">18sp</item>
-
     </style>
 
+    <!--Buttons-->
     <style name="Widget.RemindMe.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="backgroundTint">?attr/colorSecondary</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="backgroundTint">@color/secondaryColor</item>
+        <item name="rippleColor">@color/mtrl_fab_ripple_color</item>
     </style>
 
+    <!--Text Button-->
     <style name="Widget.RemindMe.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">@color/secondaryColor</item>
     </style>
 
-    <style name="Widget.RemindMe.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.RemindMe.TextInputLayout.HintText
-        </item>
+    <!--Text Fields-->
+    <style name="RemindMe.TextInputEditText.Filledbox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="hintTextAppearance">@style/HintText</item>
         <item name="android:paddingBottom">8dp</item>
+        <item name="boxBackgroundColor">@color/background</item>
     </style>
 
-    <style name="TextAppearance.RemindMe.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    <style name="HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="Widget.RemindMe.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+    <!--FAB-->
+    <style name="RemindMe.FAB" parent="@style/Widget.MaterialComponents.FloatingActionButton">
 
     </style>
+
+    <!--Fragment-->
+    <style name="RemindMe.Fragment" parent="Theme.RemindMe">
+        <item name="android:background">@color/background</item>
+
+    </style>
+
+    <!--Alert Dialog-->
+    <style name="RemindMe.AlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/secondaryColor</item>
+        <item name="colorPrimaryDark">@color/secondaryColorDark</item>
+        <item name="colorSecondary">@color/primaryColor</item>
+        <item name="colorAccent">?attr/colorSecondary</item>
+        <item name="colorError">@color/error</item>
+        <item name="actionBarSize">@dimen/mtrl_toolbar_default_height</item>
+        <item name="minTouchTargetSize">@dimen/mtrl_min_touch_target_size</item>
+    </style>
+
+    <!--Animation New Reminder via FAB-->
+    <style name="RemindMe.Animation" parent="Theme.RemindMe">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
 
 </resources>
+
+    <!--Base Theme items--><!-- Color palette --><!--<item name="colorPrimaryDark">@color/primary_dark_material_dark</item>--><!--<item name="colorPrimary">@color/primary_material_dark</item>--><!--<item name="colorAccent">@color/accent_material_dark</item>-->
+
+    <!--<item name="colorControlNormal">?android:attr/textColorSecondary</item>--><!--<item name="colorControlActivated">?attr/colorAccent</item>--><!--<item name="colorControlHighlight">@color/ripple_material_dark</item>--><!--<item name="colorButtonNormal">@color/button_material_dark</item>--><!--<item name="colorSwitchThumbNormal">@color/switch_thumb_material_dark</item>--><!--<item name="controlBackground">?attr/selectableItemBackgroundBorderless</item>-->
+
+    <!--<item name="drawerArrowStyle">@style/Widget.AppCompat.DrawerArrowToggle</item>-->
+
+    <!--<item name="checkboxStyle">@style/Widget.AppCompat.CompoundButton.CheckBox</item>--><!--<item name="radioButtonStyle">@style/Widget.AppCompat.CompoundButton.RadioButton</item>--><!--<item name="switchStyle">@style/Widget.AppCompat.CompoundButton.Switch</item>-->
+
+    <!--<item name="ratingBarStyle">@style/Widget.AppCompat.RatingBar</item>--><!--<item name="ratingBarStyleIndicator">@style/Widget.AppCompat.RatingBar.Indicator</item>--><!--<item name="ratingBarStyleSmall">@style/Widget.AppCompat.RatingBar.Small</item>--><!--<item name="seekBarStyle">@style/Widget.AppCompat.SeekBar</item>-->
+
+    <!--&lt;!&ndash; Button styles &ndash;&gt;--><!--<item name="buttonStyle">@style/Widget.AppCompat.Button</item>--><!--<item name="buttonStyleSmall">@style/Widget.AppCompat.Button.Small</item>--><!--<item name="android:textAppearanceButton">@style/TextAppearance.AppCompat.Widget.Button</item>-->
+
+    <!--<item name="imageButtonStyle">@style/Widget.AppCompat.ImageButton</item>-->
+
+    <!--<item name="buttonBarStyle">@style/Widget.AppCompat.ButtonBar</item>--><!--<item name="buttonBarButtonStyle">@style/Widget.AppCompat.Button.ButtonBar.AlertDialog</item>--><!--<item name="buttonBarPositiveButtonStyle">?attr/buttonBarButtonStyle</item>--><!--<item name="buttonBarNegativeButtonStyle">?attr/buttonBarButtonStyle</item>--><!--<item name="buttonBarNeutralButtonStyle">?attr/buttonBarButtonStyle</item>-->
+
+    <!--&lt;!&ndash; Dialog attributes &ndash;&gt;--><!--<item name="dialogTheme">@style/ThemeOverlay.AppCompat.Dialog</item>--><!--<item name="dialogPreferredPadding">@dimen/abc_dialog_padding_material</item>--><!--<item name="dialogCornerRadius">@dimen/abc_dialog_corner_radius_material</item>-->
+
+    <!--<item name="alertDialogTheme">@style/ThemeOverlay.AppCompat.Dialog.Alert</item>--><!--<item name="alertDialogStyle">@style/AlertDialog.AppCompat</item>--><!--<item name="alertDialogCenterButtons">false</item>--><!--<item name="textColorAlertDialogListItem">@color/abc_primary_text_material_dark</item>--><!--<item name="listDividerAlertDialog">@null</item>-->
+
+    <!--&lt;!&ndash; Define these here; ContextThemeWrappers around themes that define them should--><!--always clear these values. &ndash;&gt;--><!--<item name="windowFixedWidthMajor">@null</item>--><!--<item name="windowFixedWidthMinor">@null</item>--><!--<item name="windowFixedHeightMajor">@null</item>--><!--<item name="windowFixedHeightMinor">@null</item>-->
+
+    <!--&lt;!&ndash; Tooltip attributes &ndash;&gt;--><!--<item name="tooltipFrameBackground">@drawable/tooltip_frame_light</item>--><!--<item name="tooltipForegroundColor">@color/foreground_material_light</item>-->
+
+    <!--<item name="colorError">@color/error_color_material_dark</item>-->
+

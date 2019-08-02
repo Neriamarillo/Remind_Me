@@ -6,10 +6,7 @@
     <!--android:id="@+id/nav_reminders"-->
     <!--android:icon="@drawable/ic_note_add_black_24dp"-->
     <!--android:title="@string/navigation_drawer_reminders_option" />-->
-    <!--<item-->
-    <!--android:id="@+id/nav_settings"-->
-    <!--android:icon="@drawable/ic_menu_manage"-->
-    <!--android:title="@string/navigation_drawer_settings_option" />-->
+
 
     <!--</group>-->
 
