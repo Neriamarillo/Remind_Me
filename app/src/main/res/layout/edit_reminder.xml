@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/editReminder"
-    style="@style/RemindMe.Fragment"
+    style="@style/RemindMe.Fragment.Edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditReminder">

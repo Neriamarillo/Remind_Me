@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.RemindMe" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!--<item name="isMaterialTheme">true</item>-->
+        <!--<item name="colorPrimary">@color/primaryColor</item>-->
+        <!--<item name="colorPrimaryVariant">@color/primaryDarkColor</item>-->
+        <!--<item name="colorSecondary">@color/secondaryColor</item>-->
+        <!--<item name="colorSecondaryVariant">@color/secondaryDarkColor</item>-->
+        <!--<item name="colorSurface">@color/background</item>-->
+        <!--<item name="colorPrimarySurface">@color/primaryColor</item>-->
+        <!--<item name="colorOnPrimary">@color/design_default_color_on_primary</item>-->
+        <!--<item name="colorOnSecondary">@color/design_default_color_on_secondary</item>-->
+        <!--<item name="colorOnBackground">@color/design_default_color_on_background</item>-->
+        <!--<item name="colorOnError">@color/design_default_color_on_error</item>-->
+        <!--<item name="colorOnSurface">@color/design_default_color_on_surface</item>-->
+        <!--<item name="colorOnPrimarySurface">@color/primaryColor</item>-->
+
+
+        <!--<item name="colorPrimary">@color/secondaryColor</item>-->
+        <!--<item name="colorPrimaryVariant">@color/primaryColor</item>-->
+        <!--<item name="colorOnPrimary">@color/primaryTextColor</item>-->
+        <!--<item name="colorSecondary">@color/secondaryColor</item>-->
+        <!--<item name="colorSecondaryVariant">@color/primaryColor</item>-->
+        <!--<item name="colorOnSecondary">@color/secondaryTextColor</item>-->
+        <!--<item name="colorAccent">@color/secondaryColor</item>-->
+        <!--<item name="colorError">@color/error</item>-->
+        <!--<item name="colorOnError">#FFFFFF</item>-->
+        <!--<item name="colorPrimarySurface">@color/primaryColor</item>-->
+        <!--<item name="colorOnSurface">@color/primaryTextColor</item>-->
+        <!--<item name="android:colorBackground">@color/background</item>-->
+        <!--<item name="colorOnBackground">@color/primaryColor</item>-->
+        <!--<item name="android:statusBarColor">@color/primaryDarkColor</item>-->
+        <!--<item name="colorControlActivated">@color/secondaryColor</item>-->
+        <!--<item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
+    </style>
+
+
+</resources>

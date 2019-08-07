@@ -1,48 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/materialCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
-    app:cardCornerRadius="2dp"
-    android:layout_marginBottom="1dp">
+    android:layout_marginBottom="1dp"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/timeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/titleTextView"
-            android:layout_alignParentLeft="true" />
+            <RelativeLayout
+                android:id="@+id/topCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/titleTextView"
-            android:layout_alignParentRight="true" />
+                <!--Title-->
+                <LinearLayout
+                    android:id="@+id/titleCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/descTextView"
-            android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/titleTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <!--Time / Date-->
+                <LinearLayout
+                    android:id="@+id/timeDateCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/titleCard"
+                    android:layout_alignParentRight="true"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/dateTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true" />
+
+
+                        <TextView
+                            android:id="@+id/timeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dateTextView"
+                            android:layout_alignParentRight="true" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <!--Description-->
+            <LinearLayout
+                android:id="@+id/descCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/topCard"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/descTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true" />
+
+            </LinearLayout>
+
+
+            <!--Action Buttons-->
+            <!--<LinearLayout-->
+            <!--android:id="@+id/cardButtons"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/descCard"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:visibility="gone">-->
+
+
+            <!--</LinearLayout>-->
+
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/timeTextView"
-            android:layout_alignParentLeft="true"
-            android:maxLength="48" />
+            android:layout_below="@+id/card_view"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <!--Divider-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <!--Edit Button-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/card_edit_button"
+                style="@style/Widget.RemindMe.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/card_delete_button"
+                android:layout_marginEnd="12dp"
+                android:text="@string/card_edit"
+                app:icon="@drawable/ic_edit_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent" />
+            <!--Delete Button-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/card_delete_button"
+                style="@style/Widget.RemindMe.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="@string/card_delete"
+                app:icon="@drawable/ic_delete_black_24dp"
+                app:layout_constraintEnd_toStartOf="@+id/card_edit_button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 
-
 </com.google.android.material.card.MaterialCardView>
-
 

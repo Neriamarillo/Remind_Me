@@ -1,17 +1,24 @@
 package com.jn769.remindmev2;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import com.google.android.material.button.MaterialButton;
+
 import java.util.List;
-import java.util.Locale;
 
 /*
  * View Adapter for setting the items in the RecyclerView
@@ -19,11 +26,27 @@ import java.util.Locale;
 
 public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapter.ReminderViewHolder> {
 
-    class ReminderViewHolder extends RecyclerView.ViewHolder {
+    private List<Reminder> reminderList; // Cached copy of words
+
+    private Reminder singleReminder; // Single reminder
+
+
+    private ReminderViewModel reminderViewModel;
+    private ReminderRepository reminderRepository;
+
+    private Context context;
+    private int mExpandedPosition = -1;
+    private int previousExpandedPosition = -1;
+
+
+    class ReminderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView titleItemView;
         private final TextView timeItemView;
         private final TextView dateItemView;
         private final TextView descItemView;
+        private final ConstraintLayout cardButtons;
+        private final MaterialButton editButton;
+        private final MaterialButton deleteButton;
 
         ReminderViewHolder(View itemView) {
             super(itemView);
@@ -31,40 +54,78 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
             timeItemView = itemView.findViewById(R.id.timeTextView);
             dateItemView = itemView.findViewById(R.id.dateTextView);
             descItemView = itemView.findViewById(R.id.descTextView);
+            cardButtons = itemView.findViewById(R.id.cardButtons);
+            editButton = itemView.findViewById(R.id.card_edit_button);
+            deleteButton = itemView.findViewById(R.id.card_delete_button);
+            itemView.setOnClickListener(this);
+            editButton.setOnClickListener(this);
+            deleteButton.setOnClickListener(this);
+
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+
+            if (view == editButton) {
+                mExpandedPosition = -1;
+                notifyItemChanged(position);
+                Intent intent = new Intent(context, EditReminder.class);
+                intent.putExtra("REMINDER_ID", reminderList.get(position).getId());
+                ActivityCompat.startActivity(context, intent, null);
+
+//                startRevealEdit(view, reminderList.get(position).getId());
+            }
+
+            if (view == deleteButton) {
+                mExpandedPosition = -1;
+                deleteReminder(position);
+                Toast.makeText(context, "Reminder Deleted", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    private List<Reminder> reminderList; // Cached copy of words
-
-    private Reminder singleReminder; // Single reminder
-
-    DateFormat output = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
+//    DateFormat output = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
 
     ReminderViewAdapter(List<Reminder> reminderList) {
         this.reminderList = reminderList;
     }
 
-    ReminderViewAdapter(Reminder reminder) {
-        this.singleReminder = reminder;
-    }
-
+    @NonNull
     @Override
-    public ReminderViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+    public ReminderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+        context = parent.getContext();
+        reminderViewModel = ViewModelProviders.of((FragmentActivity) parent.getContext()).get(ReminderViewModel.class);
         return new ReminderViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_item_card, parent, false));
+
     }
 
     // Added check for null input before setting text
     @Override
-    public void onBindViewHolder(@NonNull ReminderViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReminderViewHolder holder, final int position) {
+        holder.itemView.setTag(position);
+
+        final boolean isExpanded = position == mExpandedPosition;
+        holder.cardButtons.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.itemView.setActivated(isExpanded);
+        if (isExpanded)
+            previousExpandedPosition = position;
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mExpandedPosition = isExpanded ? -1 : position;
+                notifyDataSetChanged();
+            }
+        });
 
         if (reminderList != null) {
             holder.titleItemView.setText(reminderList.get(position).getTitle());
             if (reminderList.get(position).getTime() != null) {
                 holder.timeItemView.setText(reminderList.get(position).getTime());
             }
-//            holder.dateItemView.setText(reminderList.get(position).getDate() != null ?
-//                    reminderList.get(position).getDate().toString().substring(0, 12) : null);
             holder.dateItemView.setText(reminderList.get(position).getDate());
             if (reminderList.get(position).getDescription() != null) {
                 holder.descItemView.setText(reminderList.get(position).getDescription());
@@ -97,6 +158,36 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
     void setSingleReminder(Reminder reminder) {
         singleReminder = reminder;
         notifyDataSetChanged();
+    }
+
+    private void deleteReminder(final int position) {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                reminderViewModel.deleteReminder(position);
+                Log.d("Postion at Delete Reminder", String.valueOf(position));
+                Log.d("Postion at Delete Reminder", String.valueOf(reminderList.get(position).getId()));
+            }
+        });
+        thread.start();
+        notifyItemRemoved(position);
+    }
+
+    private void startRevealEdit(View v, int id) {
+        //calculates the center of the View v you are passing
+        int revealX = (int) (v.getX() + v.getWidth() / 2);
+        int revealY = (int) (v.getY() + v.getHeight() / 2);
+
+        //create an intent, that launches the second activity and pass the x and y coordinates
+        Intent intent = new Intent(context, EditReminder.class);
+        intent.putExtra("REMINDER_ID", id);
+        intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_X, revealX);
+        intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_Y, revealY);
+
+        //just start the activity as an shared transition, but set the options bundle to null
+        ActivityCompat.startActivity(context, intent, null);
+
+        //to prevent strange behaviours override the pending transitions
+//        overridePendingTransition(0, 0);
     }
 
 }

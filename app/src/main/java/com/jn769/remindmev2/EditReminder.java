@@ -9,7 +9,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -90,8 +89,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                finish();
-                revealAnimation.unRevealActivity();
+                finish();
             }
         });
 
@@ -100,7 +98,6 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
 
         // Date and time
         dateFormatter = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
-//        smallDateFormatter = new SimpleDateFormat("EEE MMM dd", Locale.US);
         timeFormatter = new SimpleDateFormat("h:mm a", Locale.US);
         calendar = Calendar.getInstance();
 
@@ -169,7 +166,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
                 } else {
                     setReminderInfo();
                     startNotification();
-                    revealAnimation.unRevealActivity();
+                    finish();
                 }
             }
         });
@@ -177,7 +174,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                revealAnimation.unRevealActivity();
+                finish();
             }
 
         });
@@ -197,11 +194,11 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
 
     }
 
-    private boolean isTitleValid(@Nullable Editable text) {
+    public static boolean isTitleValid(@Nullable CharSequence text) {
         return text != null && text.length() >= 1;
     }
 
-    void setReminderInfo() {
+    public void setReminderInfo() {
         Log.d("DATE EDIT TEXT", timeEditText.getText().toString());
         Log.d("Set Reminder AlarmId", String.valueOf(alarmId));
         Reminder editedReminder = new Reminder(

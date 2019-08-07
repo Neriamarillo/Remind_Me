@@ -169,9 +169,6 @@
     <!--TESTING-->
 
 
-
-
-
     <!--Base Theme items--><!-- Color palette --><!--<item name="colorPrimaryDark">@color/primary_dark_material_dark</item>--><!--<item name="colorPrimary">@color/primary_material_dark</item>--><!--<item name="colorAccent">@color/accent_material_dark</item>-->
 
     <!--<item name="colorControlNormal">?android:attr/textColorSecondary</item>--><!--<item name="colorControlActivated">?attr/colorAccent</item>--><!--<item name="colorControlHighlight">@color/ripple_material_dark</item>--><!--<item name="colorButtonNormal">@color/button_material_dark</item>--><!--<item name="colorSwitchThumbNormal">@color/switch_thumb_material_dark</item>--><!--<item name="controlBackground">?attr/selectableItemBackgroundBorderless</item>-->

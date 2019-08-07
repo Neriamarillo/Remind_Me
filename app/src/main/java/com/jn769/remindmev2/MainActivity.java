@@ -2,29 +2,31 @@ package com.jn769.remindmev2;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -39,7 +41,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String CHANNEL_ID = "Reminders";
-//    private static final int NOTIFICATION_ID = 0;
+    public static final int DEFAULT_NIGHT_MODE = AppCompatDelegate.MODE_NIGHT_NO;
+
 
     private ReminderViewModel reminderViewModel;
     private ReminderViewAdapter adapter;
@@ -50,10 +53,18 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle t;
     private NavigationView nv;
 
+    private LinearLayout cardButtons;
+    private MaterialButton editButton;
+    private MaterialButton deleteButton;
+
+    protected SharedPreferences mPrefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
         setContentView(R.layout.main_activity);
+
         final Toolbar toolbar = findViewById(R.id.app_bar);
         toolbar.setTitle(R.string.app_title);
         toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
@@ -67,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Init Notification Channel
         createNotificationChannel();
+
+        editButton = findViewById(R.id.card_edit_button);
+        deleteButton = findViewById(R.id.card_delete_button);
 
         // Drawer
         dl = findViewById(R.id.activity_main);
@@ -92,29 +106,15 @@ public class MainActivity extends AppCompatActivity {
 //                        Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.mycart:
+
                         Toast.makeText(MainActivity.this, "My Cart", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         return true;
                 }
-
-
                 return true;
-
             }
         });
-
-
-//        Toolbar toolbar = findViewById(R.id.app_bar);
-//        setSupportActionBar(toolbar);
-
-        // Old fragment code
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .add(R.id.container, new ReminderFragment())
-//                    .commit();
-//        }
 
         // FAB code
         fab = findViewById(R.id.main_add_fab);
@@ -122,25 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // AddReminderFragment Test code
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.container, new AddReminderFragment())
-//                        .addToBackStack(null)
-//                        .commitAllowingStateLoss();
-
-//                AddReminderFragment mDialog = new AddReminderFragment();
-//                mDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullscreenDialog);
-//                mDialog.show(getSupportFragmentManager(), "DialogFragment");
-
-
-//                Code for AddReminder Activity
-
                 startRevealAdd(view);
-//                fab.hide();
-
-//                Intent intent = new Intent(MainActivity.this, AddReminder.class);
-//                startActivity(intent);
             }
         });
 
@@ -161,77 +143,36 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // RecyclerView ItemOnTouchListeners
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView,
-                new RecyclerTouchListener.ClickListener() {
-                    @Override
-                    public void onClick(View view, final int position) {
-//                        MaterialAlertDialogBuilder viewReminderDialog = new MaterialAlertDialogBuilder(MainActivity.this);
-//                        final ReminderViewAdapter dialogAdapter = new ReminderViewAdapter(new ArrayList<Reminder>());
-//                        recyclerView.setAdapter(adapter);
 
-
-//                        TEMPORARY
-//                        MaterialAlertDialogBuilder deleteDialog = new MaterialAlertDialogBuilder(MainActivity.this, R.style.RemindMe_AlertDialog);
-//                        deleteDialog
-//                                .setTitle(R.string.confirm_delete)
-//                                .setMessage("Are you sure you want to delete this reminder?")
-//                                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        reminderViewModel.deleteReminder(position);
-//                                    }
-//                                })
-//                                .setNegativeButton("Cancel", null)
-//                                .show();
-
-
-                        Log.d("Item ID", String.valueOf(position));
-                        startRevealEdit(view, adapter.getReminder(position).getId());
-
-
-//                        TEMPORARY
-
-
-//                        editReminder(position);
-
-//                        AddReminderFragment mDialog = new AddReminderFragment();
-//                mDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_MaterialComponents_Dialog);
-//                mDialog.show(getSupportFragmentManager(), "DialogFragment");
-
-
+//        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView,
+//                new RecyclerTouchListener.ClickListener() {
+//                    @Override
+//                    public void onClick(View view, final int position) {
 //
-//                        viewReminderDialog
-//                                .setView(R.layout.edit_reminder_dialog)
-//                                .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
+//                        Log.d("Item ID", String.valueOf(position));
 //
-//                                    }
-//                                }) // change listener
-//                                .setNegativeButton("Cancel", null)
-//                                .show();
-                    }
-
-                    @Override
-                    public void onLongClick(View view, final int position) {
-                        MaterialAlertDialogBuilder deleteDialog = new MaterialAlertDialogBuilder(MainActivity.this, R.style.RemindMe_AlertDialog);
-                        deleteDialog
-                                .setTitle(R.string.confirm_delete)
-                                .setMessage("Are you sure you want to delete this reminder?")
-                                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        reminderViewModel.deleteReminder(position);
-                                    }
-                                })
-                                .setNegativeButton("Cancel", null)
-                                .show();
-                    }
-                }));
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onLongClick(View view, final int position) {
+////                        MaterialAlertDialogBuilder deleteDialog = new MaterialAlertDialogBuilder(MainActivity.this, R.style.RemindMe_AlertDialog);
+////                        deleteDialog
+////                                .setTitle(R.string.confirm_delete)
+////                                .setMessage("Are you sure you want to delete this reminder?")
+////                                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+////                                    @Override
+////                                    public void onClick(DialogInterface dialog, int which) {
+////                                        reminderViewModel.deleteReminder(position);
+////                                    }
+////                                })
+////                                .setNegativeButton("Cancel", null)
+////                                .show();
+//                    }
+//                }));
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            Toolbar toolbar = findViewById(R.id.app_bar);
-
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
@@ -240,16 +181,16 @@ public class MainActivity extends AppCompatActivity {
                     fab.show();
                 }
                 super.onScrolled(recyclerView, dx, dy);
-
-//                if (!recyclerView.canScrollVertically(-1)) {
-//                    // we have reached the top of the list
-//                    toolbar.setElevation(0);
-//                } else {
-//                    // we are not at the top yet
-//                    toolbar.setElevation(50);
-//                }
             }
         });
+
+//        if (deleteButton)
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                reminderViewModel.deleteReminder(recyclerView.getChildAdapterPosition(v));
+//            }
+//        });
 
 //      DRAWER
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -439,6 +380,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRestart() {
         super.onRestart();
+
     }
 
     @Override
@@ -450,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         fab.show();
+
     }
 
     @Override
@@ -477,8 +420,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
+//
         adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -501,6 +445,7 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
 
 //    @Override
 //    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
