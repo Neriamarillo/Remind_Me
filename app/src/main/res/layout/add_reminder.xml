@@ -23,7 +23,7 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/addToolbar"
-                style="@style/Dialog.Toolbar"
+                style="@style/Main.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentInsetEnd="0dp"
@@ -32,7 +32,6 @@
                 app:contentInsetStart="0dp"
                 app:contentInsetStartWithNavigation="0dp" />
         </com.google.android.material.appbar.AppBarLayout>
-
 
         <!--Title-->
         <com.google.android.material.textfield.TextInputLayout

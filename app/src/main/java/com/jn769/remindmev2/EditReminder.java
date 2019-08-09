@@ -47,6 +47,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
 
     Bundle bundle;
     private int reminderId;
+    private LiveData<Reminder> reminderLiveData;
 
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
@@ -69,9 +70,10 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
     private RevealAnimation revealAnimation;
 
     private NotificationManager notificationManager;
-    private int alarmId;
+    private long alarmId;
     private int alarmIdFromData;
     private boolean hasNotification;
+    private boolean notificationRequested = false;
 
     public EditReminder() {
 
@@ -85,13 +87,20 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         // Toolbar
         Toolbar toolbar = findViewById(R.id.editToolbar);
         toolbar.setTitle(R.string.title_edit_reminder);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        setSupportActionBar(toolbar);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
+
 
         EditReminderViewModel editReminderViewModel = ViewModelProviders.of(this).get(EditReminderViewModel.class);
         reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel.class);
@@ -115,9 +124,8 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         Log.d("DATE", String.valueOf(dateEditText.getText()));
         Log.d("TIME", String.valueOf(timeEditText.getText()));
 
-        if (!materialCheckBox.isChecked()) {
-            timeDate.setVisibility(View.GONE);
-        }
+//        materialCheckBox.setChecked(false);
+
 
         Intent intent = this.getIntent();
 
@@ -131,8 +139,8 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         revealAnimation = new RevealAnimation(rootLayout, intent, this);
 
         // LiveData
-        LiveData<Reminder> reminder = editReminderViewModel.getReminder(reminderId);
-        reminder.observe(this, new Observer<Reminder>() {
+        reminderLiveData = editReminderViewModel.getReminder(reminderId);
+        reminderLiveData.observe(this, new Observer<Reminder>() {
             @Override
             public void onChanged(Reminder reminder) {
                 titleEditText.setText(reminder.getTitle());
@@ -140,19 +148,26 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
                 dateEditText.setText(reminder.getDate());
                 descEditText.setText(reminder.getDescription());
                 alarmId = reminder.getAlarmId();
-                alarmIdFromData = reminder.getAlarmId();
+//                alarmIdFromData = reminder.getAlarmId();
                 Log.d("ALARMID LIVEDATA", String.valueOf(alarmId));
                 if (alarmId != 0) {
                     materialCheckBox.setChecked(true);
-                    hasNotification = true;
+                    notificationRequested = true;
                 } else {
                     materialCheckBox.setChecked(false);
-                    hasNotification = false;
+                    timeDate.setVisibility(View.GONE);
+                    notificationRequested = false;
                 }
+
+                Log.d("CHECKBOX AT OBSERVER", String.valueOf(materialCheckBox.isChecked()));
+
                 Log.d("DATE EDIT TEXT", timeEditText.getText().toString());
 
             }
+
         });
+
+        Log.d("CHECKBOX After OBSERVER", String.valueOf(materialCheckBox.isChecked()));
 
         dateListener();
         timeListener();
@@ -165,7 +180,9 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
                     titleEditText.setError(getString(R.string.titleError));
                 } else {
                     setReminderInfo();
-                    startNotification();
+                    if (notificationRequested) {
+                        startNotification();
+                    }
                     finish();
                 }
             }
@@ -185,9 +202,10 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
                 Log.d("CHECKBOX AT LISTENER", String.valueOf(materialCheckBox.isChecked()));
                 if (isChecked) {
                     timeDate.setVisibility(View.VISIBLE);
+                    notificationRequested = true;
                 } else {
                     timeDate.setVisibility(View.GONE);
-                    alarmId = 0;
+                    notificationRequested = false;
                 }
             }
         });
@@ -199,8 +217,18 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
     }
 
     public void setReminderInfo() {
+        Log.d("Notification Requested at Edit Reminder Set", String.valueOf(notificationRequested));
+
+        if (notificationRequested) {
+            alarmId = (int) System.currentTimeMillis();
+//
+        } else {
+            alarmId = 0;
+            timeEditText.setText("");
+            dateEditText.setText("");
+        }
+
         Log.d("DATE EDIT TEXT", timeEditText.getText().toString());
-        Log.d("Set Reminder AlarmId", String.valueOf(alarmId));
         Reminder editedReminder = new Reminder(
                 reminderId,
                 Objects.requireNonNull(titleEditText.getText()).toString(),
@@ -209,7 +237,9 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
                 descEditText.getText().toString(),
                 alarmId
         );
+        Log.d("Set Reminder AlarmId", String.valueOf(alarmId));
         reminderViewModel.update(editedReminder);
+
 
         Toast.makeText(
                 getApplicationContext(),
@@ -320,10 +350,10 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
 
         if (materialCheckBox.isChecked()) {
             if (alarmId == 0) {
-                alarmId = (int) calendar.getTimeInMillis();
+                alarmId = calendar.getTimeInMillis();
             }
             notifyPendingIntent = PendingIntent.getBroadcast
-                    (getApplicationContext(), alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    (getApplicationContext(), (int) alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
@@ -336,12 +366,9 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
             }
         } else {
             notifyPendingIntent = PendingIntent.getBroadcast
-                    (getApplicationContext(), alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    (getApplicationContext(), (int) alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             alarmManager.cancel(notifyPendingIntent);
         }
-
-
     }
-
 }

@@ -62,14 +62,15 @@
     <color name="primaryColor">#ffffff</color>
     <color name="primaryLightColor">#ffffff</color>
     <color name="primaryDarkColor">#cccccc</color>
-    <color name="secondaryColor">#b71c1c</color>
-    <color name="secondaryLightColor">#f05545</color>
-    <color name="secondaryDarkColor">#7f0000</color>
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#ffffff</color>
-    <!--<color name="background">#FFFFFF</color>-->
+    <color name="secondaryColor">#d50000</color>
+    <color name="secondaryLightColor">#ff5131</color>
+    <color name="secondaryDarkColor">#9b0000</color>
+    <!--<color name="primaryTextColor">#000000</color>-->
+    <!--<color name="secondaryTextColor">#ffffff</color>-->
     <color name="background">#FFFFFF</color>
     <color name="error">#B00020</color>
+    <color name="pure_white">#FFFFFF</color>
+    <color name="pure_black">#000000</color>
 
     <!--RED RED-->
     <!--<color name="primaryColor">#d50000</color>-->
@@ -127,16 +128,16 @@
     <!--<color name="secondaryTextColor">#ffffff</color>-->
 
     <!--Dark Grey | Yellow-->
-    <color name="primaryColorDark">#1F1A24</color>
-    <color name="primaryLightColorDark">#000000</color>
-    <color name="primaryDarkColorDark">#29434e</color>
-    <color name="secondaryColorDark">#e53734</color>
-    <color name="secondaryLightColorDark">#ffff52</color>
-    <color name="secondaryDarkColorDark">#c7a500</color>
-    <color name="primaryTextColorDark">#ffffff</color>
-    <color name="secondaryTextColorDark">#000000</color>
-    <color name="backgroundDark">#000000</color>
-    <color name="surfaceDark">#121212</color>
+    <!--<color name="primaryColorDark">#1F1A24</color>-->
+    <!--<color name="primaryLightColorDark">#000000</color>-->
+    <!--<color name="primaryDarkColorDark">#29434e</color>-->
+    <!--<color name="secondaryColorDark">#e53734</color>-->
+    <!--<color name="secondaryLightColorDark">#ffff52</color>-->
+    <!--<color name="secondaryDarkColorDark">#c7a500</color>-->
+    <!--<color name="primaryTextColorDark">#ffffff</color>-->
+    <!--<color name="secondaryTextColorDark">#000000</color>-->
+    <!--<color name="backgroundDark">#000000</color>-->
+    <!--<color name="surfaceDark">#121212</color>-->
 
     <!--BASE MATERIAL THEME-->
     <color name="design_default_color_background">#FFFFFF</color>

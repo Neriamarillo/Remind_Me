@@ -1,6 +1,7 @@
 package com.jn769.remindmev2;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
@@ -66,7 +68,7 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
+            final int position = getAdapterPosition();
 
             if (view == editButton) {
                 mExpandedPosition = -1;
@@ -79,9 +81,29 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
             }
 
             if (view == deleteButton) {
-                mExpandedPosition = -1;
-                deleteReminder(position);
-                Toast.makeText(context, "Reminder Deleted", Toast.LENGTH_SHORT).show();
+                MaterialAlertDialogBuilder deleteDialog = new MaterialAlertDialogBuilder(context, R.style.RemindMe_AlertDialog);
+                deleteDialog
+                        .setTitle(R.string.confirm_delete)
+                        .setMessage("Are you sure you want to delete this reminder?")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteReminder(position);
+                                mExpandedPosition = -1;
+//                                notifyItemRemoved(position);
+                                Toast.makeText(context, "Reminder Deleted", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mExpandedPosition = -1;
+                                notifyItemChanged(position);
+
+                            }
+                        })
+                        .show();
             }
         }
     }
@@ -164,7 +186,14 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 reminderViewModel.deleteReminder(position);
+                App application = (App) context.getApplicationContext();
+                AlarmHandler alarmHandler = new AlarmHandler(application);
+
+                if (alarmHandler.getAlarms().size() != 0) {
+                    alarmHandler.deleteAlarm((int) reminderList.get(position).getAlarmId());
+                }
                 Log.d("Postion at Delete Reminder", String.valueOf(position));
+                Log.d("DELETE ALARM AT ADAPTER: ", String.valueOf(alarmHandler.getAlarms().size()));
                 Log.d("Postion at Delete Reminder", String.valueOf(reminderList.get(position).getId()));
             }
         });

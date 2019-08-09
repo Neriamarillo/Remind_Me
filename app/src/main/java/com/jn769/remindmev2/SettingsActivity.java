@@ -33,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
                 .commit();
         Toolbar toolbar = findViewById(R.id.settingsToolbar);
         toolbar.setTitle(R.string.settings_title);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

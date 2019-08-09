@@ -43,16 +43,21 @@
             android:paddingBottom="1dp"
             tools:listitem="@layout/recyclerview_item_card" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/main_add_fab"
             style="@style/RemindMe.FAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_add_black_24dp" />
+            android:text="@string/extended_fab_label"
+            app:iconTint="@color/pure_white"
+            android:textColor="@color/pure_white" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
+
+    <!--app:icon="@drawable/ic_add_black_24dp"-->
+
 

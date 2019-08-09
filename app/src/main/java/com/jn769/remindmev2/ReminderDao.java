@@ -28,7 +28,13 @@ public interface ReminderDao {
     @Query("SELECT * from reminders")
     LiveData<List<Reminder>> getAllReminders();
 
+    @Query("SELECT * FROM reminders")
+    List<Reminder> getReminderList();
+
     @Query("SELECT * FROM reminders WHERE id = :id")
     LiveData<Reminder> getReminder(int id);
+
+    @Query("SELECT * FROM reminders WHERE alarmId = :alarmId")
+    List<Reminder> getReminderAlarmId(long alarmId);
 
 }

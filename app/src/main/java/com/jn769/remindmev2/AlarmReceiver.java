@@ -7,12 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
+import java.util.List;
 import java.util.Objects;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -23,24 +25,30 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private NotificationManager notificationManager;
 
+    private List<Intent> intentList;
+    private Alarm alarm;
+    private List<Alarm> alarmList;
+
     private String title;
     private String description;
-    private int notificationId;
+    private long notificationId;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
+
 //        Toast.makeText(context, "Boot Completed", Toast.LENGTH_LONG).show();
         Toast.makeText(context, "Alarm Broadcast Received", Toast.LENGTH_LONG).show();
+        Log.d("Alarm Broadcast Received", "RECEIVED");
+
 
 //            Toast.makeText(context, "Notification Count: " + notificationId, Toast.LENGTH_LONG).show();
 
         Bundle bundle = intent.getExtras();
-//        if (bundle != null) {
+        assert bundle != null;
         title = bundle.getString("title");
         description = bundle.getString("description");
-        notificationId = bundle.getInt("alarmId");
-//        }
+        notificationId = bundle.getLong("alarmId");
 
         notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -95,9 +103,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         if (isBundledNotification) {
             notificationManager.notify(SUMMARY_ID, summaryNotification);
-            notificationManager.notify(notificationId, builder);
+            notificationManager.notify((int) notificationId, builder);
         } else {
-            notificationManager.notify(notificationId, builder);
+            notificationManager.notify((int) notificationId, builder);
         }
 
 //        notificationManager.cancel(notificationId);

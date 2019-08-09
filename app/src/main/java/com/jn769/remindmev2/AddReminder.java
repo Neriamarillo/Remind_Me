@@ -1,11 +1,9 @@
 package com.jn769.remindmev2;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +17,6 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,8 +63,9 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
     private RevealAnimation revealAnimation;
 
     private NotificationManager notificationManager;
-    private boolean notificationRequested;
-    private int alarmId;
+    private boolean notificationRequested = false;
+    private long alarmId;
+    private long notificationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +75,19 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         // Toolbar
         Toolbar toolbar = findViewById(R.id.addToolbar);
         toolbar.setTitle(R.string.title_activity_add_reminder);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 revealAnimation.unRevealActivity();
             }
         });
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
+
 
         createNotificationChannel();
         reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel.class);
@@ -140,15 +144,21 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
             }
         });
 
+        Log.d("NOTIFICATION REQUESTED 1", String.valueOf(notificationRequested));
         materialCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     timeDate.setVisibility(View.VISIBLE);
                     notificationRequested = true;
+                    Log.d("NOTIFICATION REQUESTED 2", String.valueOf(notificationRequested));
+
                 } else {
                     timeDate.setVisibility(View.GONE);
                     notificationRequested = false;
+                    Log.d("NOTIFICATION REQUESTED 3", String.valueOf(notificationRequested));
+
                 }
             }
         });
@@ -177,6 +187,7 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
 
     }
 
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Reminders";
@@ -189,30 +200,6 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         }
     }
 
-    private void startNotification() {
-        if (dateString != null || timeString != null) {
-
-            Intent notifyIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
-            AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-
-
-            notifyIntent.putExtra("title", Objects.requireNonNull(titleEditText.getText()).toString());
-            notifyIntent.putExtra("description", Objects.requireNonNull(descEditText.getText()).toString());
-            notifyIntent.putExtra("alarmId", alarmId);
-            Log.d("title", titleEditText.getText().toString());
-            Log.d("ALARMID", String.valueOf(alarmId));
-
-            PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
-                    (getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
-                Toast.makeText(this, "Event scheduled at " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR), Toast.LENGTH_LONG).show();
-            } else {
-                alarmManager.cancel(notifyPendingIntent);
-            }
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -224,13 +211,19 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
     }
 
     void setReminderInfo() {
-        alarmId = (int) System.currentTimeMillis();
+        if (notificationRequested) {
+            alarmId = (int) System.currentTimeMillis();
+        } else {
+            alarmId = 0;
+        }
         reminderViewModel.insert(new Reminder(
                 String.valueOf(titleEditText.getText()),
                 String.valueOf(timeEditText.getText()),
                 String.valueOf(dateEditText.getText()),
                 String.valueOf(descEditText.getText()),
                 alarmId));
+        Log.d("ALARMID SAVE NOTIFICATION ADD REIMINDER", String.valueOf(alarmId));
+
     }
 
     // Time Selection Listener
@@ -328,6 +321,48 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         dateEditText.setText(dateString);
     }
 
+
+    //    NOTIFICATION
+    void startNotification() {
+        if (dateString != null || timeString != null) {
+
+            AlarmHandler alarmHandler = new AlarmHandler(getApplication());
+
+//            Intent notifyIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+////            AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+//
+////            notifyIntent.putExtra("title", Objects.requireNonNull(titleEditText.getText()).toString());
+////            notifyIntent.putExtra("description", Objects.requireNonNull(descEditText.getText()).toString());
+//            notifyIntent.putExtra("alarmId", alarmId);
+//            notifyIntent.putExtra("notificationId", notificationId = calendar.getTimeInMillis());
+////            Log.d("title", titleEditText.getText().toString());
+//            Log.d("ALARMID", String.valueOf(alarmId));
+
+            Alarm alarm = new Alarm(
+                    Objects.requireNonNull(titleEditText.getText()).toString(),
+                    Objects.requireNonNull(descEditText.getText()).toString(),
+                    alarmId,
+                    calendar.getTimeInMillis());
+
+            alarmHandler.addAlarm(alarm);
+
+
+//            alarmHandler.startNotification(this, notifyIntent);
+
+
+//            PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
+//                    (getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
+//                Toast.makeText(this, "Event scheduled at " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR), Toast.LENGTH_LONG).show();
+//            } else {
+//                alarmManager.cancel(notifyPendingIntent);
+//            }
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
@@ -342,7 +377,6 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
 }
 
 

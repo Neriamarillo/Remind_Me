@@ -59,17 +59,31 @@
     <!--<color name="primaryDarkColor">#9ea7aa</color>-->
 
     <!--WHITE RED ACCENTS-->
-    <color name="primaryColor">#ffffff</color>
-    <color name="primaryLightColor">#ffffff</color>
-    <color name="primaryDarkColor">#cccccc</color>
+    <!--<color name="primaryColor">#ffffff</color>-->
+    <!--<color name="primaryLightColor">#ffffff</color>-->
+    <!--<color name="primaryDarkColor">#cccccc</color>-->
+    <!--<color name="secondaryColor">#b71c1c</color>-->
+    <!--<color name="secondaryLightColor">#f05545</color>-->
+    <!--<color name="secondaryDarkColor">#7f0000</color>-->
+    <!--<color name="primaryTextColor">#000000</color>-->
+    <!--<color name="secondaryTextColor">#ffffff</color>-->
+    <!--&lt;!&ndash;<color name="background">#FFFFFF</color>&ndash;&gt;-->
+    <!--<color name="background">#FFFFFF</color>-->
+    <!--<color name="error">#B00020</color>-->
+
+    <!--DARK THEME NIGHT MODE-->
+    <color name="primaryColor">#000000</color>
+    <color name="primaryLightColor">#121212</color>
+    <color name="primaryDarkColor">#000000</color>
     <color name="secondaryColor">#b71c1c</color>
     <color name="secondaryLightColor">#f05545</color>
     <color name="secondaryDarkColor">#7f0000</color>
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#ffffff</color>
-    <!--<color name="background">#FFFFFF</color>-->
-    <color name="background">#FFFFFF</color>
+    <!--<color name="primaryTextColor">#ffffff</color>-->
+    <!--<color name="secondaryTextColor">#000000</color>-->
+    <color name="background">#121212</color>
     <color name="error">#B00020</color>
+    <color name="pure_white">#FFFFFF</color>
+    <color name="pure_black">#000000</color>
 
     <!--RED RED-->
     <!--<color name="primaryColor">#d50000</color>-->
@@ -127,16 +141,16 @@
     <!--<color name="secondaryTextColor">#ffffff</color>-->
 
     <!--Dark Grey | Yellow-->
-    <color name="primaryColorDark">#1F1A24</color>
-    <color name="primaryLightColorDark">#000000</color>
-    <color name="primaryDarkColorDark">#29434e</color>
-    <color name="secondaryColorDark">#e53734</color>
-    <color name="secondaryLightColorDark">#ffff52</color>
-    <color name="secondaryDarkColorDark">#c7a500</color>
-    <color name="primaryTextColorDark">#ffffff</color>
-    <color name="secondaryTextColorDark">#000000</color>
-    <color name="backgroundDark">#000000</color>
-    <color name="surfaceDark">#121212</color>
+    <!--<color name="primaryColorDark">#1F1A24</color>-->
+    <!--<color name="primaryLightColorDark">#000000</color>-->
+    <!--<color name="primaryDarkColorDark">#29434e</color>-->
+    <!--<color name="secondaryColorDark">#e53734</color>-->
+    <!--<color name="secondaryLightColorDark">#ffff52</color>-->
+    <!--<color name="secondaryDarkColorDark">#c7a500</color>-->
+    <!--<color name="primaryTextColorDark">#ffffff</color>-->
+    <!--<color name="secondaryTextColorDark">#000000</color>-->
+    <!--<color name="backgroundDark">#000000</color>-->
+    <!--<color name="surfaceDark">#121212</color>-->
 
     <!--BASE MATERIAL THEME-->
     <color name="design_default_color_background">#FFFFFF</color>

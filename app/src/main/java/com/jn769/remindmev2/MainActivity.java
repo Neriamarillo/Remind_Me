@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -27,7 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ReminderViewModel reminderViewModel;
     private ReminderViewAdapter adapter;
 
-    private FloatingActionButton fab;
+    private ExtendedFloatingActionButton fab;
 
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // Init Notification Channel
         createNotificationChannel();
@@ -89,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         dl.addDrawerListener(t);
         t.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nv = findViewById(R.id.navigation_view);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -121,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 startRevealAdd(view);
             }
         });
@@ -413,16 +416,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        assert drawer != null;
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = findViewById(R.id.navigation_view);
+        assert dl != null;
+        if (dl.isDrawerOpen(GravityCompat.START)) {
+            dl.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-//
         adapter.notifyDataSetChanged();
-
     }
 
     @Override

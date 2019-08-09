@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "0dbf19b24ec489301b47dde12fe8a272",
+    "identityHash": "d6f86377296f7d3e62157d5773000a01",
     "entities": [
       {
         "tableName": "reminders",
@@ -53,12 +53,50 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "alarms",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT, `alarmId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `alarmTime` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "alarmId",
+            "columnName": "alarmId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarmTime",
+            "columnName": "alarmTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "alarmId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0dbf19b24ec489301b47dde12fe8a272\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6f86377296f7d3e62157d5773000a01')"
     ]
   }
 }

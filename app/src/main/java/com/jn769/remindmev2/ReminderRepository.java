@@ -11,6 +11,7 @@ public class ReminderRepository {
 
     private ReminderDao reminderDao;
     private LiveData<List<Reminder>> reminderList;
+    private List<Reminder> offReminderList;
     private Reminder singleReminder;
 
     ReminderRepository(Application application) {
@@ -37,6 +38,15 @@ public class ReminderRepository {
 
     public LiveData<Reminder> getReminder(int id) {
         return reminderDao.getReminder(id);
+    }
+
+    public List<Reminder> getOffReminderList() {
+        offReminderList = reminderDao.getReminderList();
+        return offReminderList;
+    }
+
+    public List<Reminder> getReminderAlarmId(long alarmId) {
+        return reminderDao.getReminderAlarmId(alarmId);
     }
 
     private static class insertAsyncTask extends AsyncTask<Reminder, Void, Void> {

@@ -37,8 +37,7 @@ public class Reminder {
     private String description;
 
     @ColumnInfo(name = "alarmId")
-    @Nullable
-    private int alarmId;
+    private long alarmId;
 
     @Ignore
     public Reminder() {
@@ -54,7 +53,7 @@ public class Reminder {
     }
 
     @Ignore
-    public Reminder(String title, String time, String date, String description, int alarmId) {
+    public Reminder(String title, String time, String date, String description, long alarmId) {
         this.title = title;
         this.time = time;
         this.date = date;
@@ -73,7 +72,7 @@ public class Reminder {
 
 
     @Ignore
-    public Reminder(int id, String title, String time, String date, String description, int alarmId) {
+    public Reminder(int id, String title, String time, String date, String description, long alarmId) {
         this.id = id;
         this.title = title;
         this.time = time;
@@ -122,11 +121,11 @@ public class Reminder {
         this.description = _description;
     }
 
-    public int getAlarmId() {
+    public long getAlarmId() {
         return alarmId;
     }
 
-    public void setAlarmId(int alarmId) {
+    public void setAlarmId(long alarmId) {
         this.alarmId = alarmId;
     }
 

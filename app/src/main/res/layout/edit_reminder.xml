@@ -14,7 +14,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/editAppBarLayout"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/editToolbar"
-                style="@style/Dialog.Toolbar"
+                style="@style/Main.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentInsetEnd="0dp"

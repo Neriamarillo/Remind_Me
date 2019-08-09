@@ -23,7 +23,7 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/app_bar_fragment"
-                style="@style/Dialog.Toolbar"
+                style="@style/Main.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="2dp"

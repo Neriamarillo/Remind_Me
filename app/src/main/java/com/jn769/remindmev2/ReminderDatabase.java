@@ -8,12 +8,14 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Reminder.class}, version = 2)
+@Database(entities = {Reminder.class, Alarm.class}, version = 2)
 public abstract class ReminderDatabase extends RoomDatabase {
 
     private static ReminderDatabase INSTANCE;
 
     public abstract ReminderDao reminderDao();
+
+    public abstract AlarmDao alarmDao();
 
     static ReminderDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {

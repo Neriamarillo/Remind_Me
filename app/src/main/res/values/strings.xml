@@ -105,5 +105,6 @@
     <string name="settings_title">Settings</string>
     <string name="card_edit">Edit</string>
     <string name="card_delete">Delete</string>
+    <string name="extended_fab_label">Create</string>
 
 </resources>

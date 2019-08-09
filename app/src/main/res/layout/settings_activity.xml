@@ -11,7 +11,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/settingsToolbar"
-            style="@style/Dialog.Toolbar"
+            style="@style/Main.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetEnd="0dp"
