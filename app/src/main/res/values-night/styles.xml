@@ -59,8 +59,8 @@
     </style>
 
     <!--FAB-->
-    <style name="RemindMe.FAB" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
-        <item name="iconTint">?android:attr/textColorPrimary</item>
+    <style name="RemindMe.FAB" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <!--<item name="iconTint">?android:attr/textColorPrimary</item>-->
     </style>
 
     <!--Fragment-->

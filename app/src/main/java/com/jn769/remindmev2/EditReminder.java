@@ -1,13 +1,10 @@
 package com.jn769.remindmev2;
 
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -341,34 +338,43 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
 
     private void startNotification() {
 
-        Intent notifyIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        PendingIntent notifyPendingIntent;
-        Log.d("title", String.valueOf(titleEditText.getText()));
-        notifyIntent.putExtra("title", String.valueOf(titleEditText.getText()));
-        notifyIntent.putExtra("description", String.valueOf(descEditText.getText()));
+        AlarmHandler alarmHandler = new AlarmHandler(getApplication());
+        Alarm alarm = new Alarm(
+                Objects.requireNonNull(titleEditText.getText()).toString(),
+                Objects.requireNonNull(descEditText.getText()).toString(),
+                alarmId,
+                calendar.getTimeInMillis());
 
-        if (materialCheckBox.isChecked()) {
-            if (alarmId == 0) {
-                alarmId = calendar.getTimeInMillis();
-            }
-            notifyPendingIntent = PendingIntent.getBroadcast
-                    (getApplicationContext(), (int) alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmHandler.addAlarm(alarm);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
-                Toast.makeText(this, "Event scheduled at "
-                                + calendar.get(Calendar.HOUR_OF_DAY) + ":"
-                                + calendar.get(Calendar.MINUTE) + " "
-                                + calendar.get(Calendar.DAY_OF_MONTH) + "/"
-                                + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR),
-                        Toast.LENGTH_LONG).show();
-            }
-        } else {
-            notifyPendingIntent = PendingIntent.getBroadcast
-                    (getApplicationContext(), (int) alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            alarmManager.cancel(notifyPendingIntent);
-        }
+//        Intent notifyIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+//        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+//        PendingIntent notifyPendingIntent;
+//        Log.d("title", String.valueOf(titleEditText.getText()));
+//        notifyIntent.putExtra("title", String.valueOf(titleEditText.getText()));
+//        notifyIntent.putExtra("description", String.valueOf(descEditText.getText()));
+//
+//        if (materialCheckBox.isChecked()) {
+//            if (alarmId == 0) {
+//                alarmId = calendar.getTimeInMillis();
+//            }
+//            notifyPendingIntent = PendingIntent.getBroadcast
+//                    (getApplicationContext(), (int) alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
+//                Toast.makeText(this, "Event scheduled at "
+//                                + calendar.get(Calendar.HOUR_OF_DAY) + ":"
+//                                + calendar.get(Calendar.MINUTE) + " "
+//                                + calendar.get(Calendar.DAY_OF_MONTH) + "/"
+//                                + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR),
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        } else {
+//            notifyPendingIntent = PendingIntent.getBroadcast
+//                    (getApplicationContext(), (int) alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+//
+//            alarmManager.cancel(notifyPendingIntent);
+//        }
     }
 }

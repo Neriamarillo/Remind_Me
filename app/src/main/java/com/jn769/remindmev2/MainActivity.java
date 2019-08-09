@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -100,19 +99,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
+
+                // TODO: Add future settings
                 switch (id) {
-                    case R.id.account:
-                        Toast.makeText(MainActivity.this, "My Account", Toast.LENGTH_SHORT).show();
-                        break;
+//                    case R.id.account:
+//                        Toast.makeText(MainActivity.this, "My Account", Toast.LENGTH_SHORT).show();
+//                        break;
                     case R.id.settings:
                         Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
                         startActivity(settingsIntent);
 //                        Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.mycart:
-
-                        Toast.makeText(MainActivity.this, "My Cart", Toast.LENGTH_SHORT).show();
-                        break;
+//                    case R.id.mycart:
+//
+//                        Toast.makeText(MainActivity.this, "My Cart", Toast.LENGTH_SHORT).show();
+//                        break;
                     default:
                         return true;
                 }

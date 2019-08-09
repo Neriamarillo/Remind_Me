@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,9 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-
     }
-
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -72,14 +69,14 @@ public class SettingsActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     if (newValue.equals("dark_theme")) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        Toast.makeText(preference.getContext(), "NIGHT MODE ON", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(preference.getContext(), "NIGHT MODE ON", Toast.LENGTH_SHORT).show();
                         editor.putString("DEFAULT_NIGHT_MODE", "dark_theme");
                         editor.apply();
                         Log.d("NEW VALUE", newValue.toString());
 
                     } else if (newValue.equals("light_theme")) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        Toast.makeText(preference.getContext(), "NIGHT MODE OFF", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(preference.getContext(), "NIGHT MODE OFF", Toast.LENGTH_SHORT).show();
                         editor.putString("DEFAULT_NIGHT_MODE", "light_theme");
                         editor.apply();
                         Log.d("NEW VALUE", newValue.toString());

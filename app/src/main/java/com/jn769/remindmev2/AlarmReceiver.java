@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -38,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 
 //        Toast.makeText(context, "Boot Completed", Toast.LENGTH_LONG).show();
-        Toast.makeText(context, "Alarm Broadcast Received", Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, "Alarm Broadcast Received", Toast.LENGTH_LONG).show();
         Log.d("Alarm Broadcast Received", "RECEIVED");
 
 
