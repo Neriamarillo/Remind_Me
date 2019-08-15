@@ -58,14 +58,11 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
     private TextInputEditText dateEditText;
     private TextInputEditText descEditText;
     private LinearLayout timeDate;
-    private MaterialCheckBox materialCheckBox;
 
     private RevealAnimation revealAnimation;
 
-    private NotificationManager notificationManager;
     private boolean notificationRequested = false;
     private long alarmId;
-    private long notificationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +80,6 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
                 revealAnimation.unRevealActivity();
             }
         });
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//        }
-
 
         createNotificationChannel();
         reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel.class);
@@ -112,7 +104,7 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         timeDate = findViewById(R.id.timeDateLand);
         MaterialButton saveButton = findViewById(R.id.save_button);
         MaterialButton cancelButton = findViewById(R.id.cancel_button);
-        materialCheckBox = findViewById(R.id.checkbox_notify);
+        MaterialCheckBox materialCheckBox = findViewById(R.id.checkbox_notify);
 
         titleEditText.requestFocus();
         timeDate.setVisibility(View.GONE);
@@ -152,35 +144,23 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
                 if (isChecked) {
                     timeDate.setVisibility(View.VISIBLE);
                     notificationRequested = true;
-                    Log.d("NOTIFICATION REQUESTED 2", String.valueOf(notificationRequested));
+//                    Log.d("NOTIFICATION REQUESTED 2", String.valueOf(notificationRequested));
 
                 } else {
                     timeDate.setVisibility(View.GONE);
                     notificationRequested = false;
-                    Log.d("NOTIFICATION REQUESTED 3", String.valueOf(notificationRequested));
+//                    Log.d("NOTIFICATION REQUESTED 3", String.valueOf(notificationRequested));
 
                 }
             }
         });
 
-        // Notifications
-
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             String groupId = "com.jn769.remindmev2";
             String groupName = "Reminders";
 
-//            INTENT FOR NOTIFICATION SETTINGS
-
-//            Intent notifIntent = null;
-//            notifIntent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
-//            notifIntent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
-//            notifIntent.putExtra(Settings.EXTRA_CHANNEL_ID, groupId);
-//            startActivity(notifIntent);
-
-            notificationManager =
-                    (NotificationManager)
-                            getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager = (NotificationManager)
+                    getSystemService(Context.NOTIFICATION_SERVICE);
 
             notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(groupId, groupName));
         }
@@ -210,7 +190,7 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         return text != null && text.length() >= 1;
     }
 
-    void setReminderInfo() {
+    private void setReminderInfo() {
         if (notificationRequested) {
             alarmId = (int) System.currentTimeMillis();
         } else {
@@ -222,13 +202,11 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
                 String.valueOf(dateEditText.getText()),
                 String.valueOf(descEditText.getText()),
                 alarmId));
-        Log.d("ALARMID SAVE NOTIFICATION ADD REIMINDER", String.valueOf(alarmId));
 
     }
 
     // Time Selection Listener
-    public void timeListener() {
-//        final TextInputEditText setTime = findViewById(R.id.timeEditText);
+    private void timeListener() {
         timeEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,11 +224,9 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
     }
 
     // Time setup
-    public void setUpTime() {
-        //                R.style.RemindMe_Picker,
+    private void setUpTime() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 this,
-//                R.style.RemindMe_Picker,
                 AddReminder.this,
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
@@ -262,12 +238,9 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
                           int selectedHour,
                           int selectedMinute) {
         final Date time;
-//        final Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
         calendar.set(Calendar.MINUTE, selectedMinute);
         time = calendar.getTime();
-//        timeSet = time;
-//        Log.d("TIME", timeSet.toString());
         timeString = timeFormatter.format(time);
         timeEditText.setText(timeString);
         timeEditText.setShowSoftInputOnFocus(false);
@@ -275,7 +248,7 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
     }
 
     // Date Selection Listener
-    public void dateListener() {
+    private void dateListener() {
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,11 +265,9 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
     }
 
     // Date setup
-    public void setUpDate() {
-        //                R.style.RemindMe_Picker,
+    private void setUpDate() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
-//                R.style.RemindMe_Picker,
                 AddReminder.this,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -313,55 +284,23 @@ public class AddReminder extends AppCompatActivity implements DatePickerDialog.O
         calendar.set(Calendar.MONTH, selectedMonth);
         calendar.set(Calendar.DAY_OF_MONTH, selectedDay);
         date = calendar.getTime();
-//        dateSet = date;
-//        Log.d("DATE", String.valueOf(dateSet));
-//        final TextInputEditText dateEditText = findViewById(R.id.dateEditText);
         dateString = dateFormatter.format(date);
         Log.d("FORMATTED DATE", dateString);
         dateEditText.setText(dateString);
     }
 
-
     //    NOTIFICATION
-    void startNotification() {
+    private void startNotification() {
         if (dateString != null || timeString != null) {
-
             AlarmHandler alarmHandler = new AlarmHandler(getApplication());
-
-//            Intent notifyIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
-////            AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-//
-////            notifyIntent.putExtra("title", Objects.requireNonNull(titleEditText.getText()).toString());
-////            notifyIntent.putExtra("description", Objects.requireNonNull(descEditText.getText()).toString());
-//            notifyIntent.putExtra("alarmId", alarmId);
-//            notifyIntent.putExtra("notificationId", notificationId = calendar.getTimeInMillis());
-////            Log.d("title", titleEditText.getText().toString());
-//            Log.d("ALARMID", String.valueOf(alarmId));
-
             Alarm alarm = new Alarm(
                     Objects.requireNonNull(titleEditText.getText()).toString(),
                     Objects.requireNonNull(descEditText.getText()).toString(),
                     alarmId,
                     calendar.getTimeInMillis());
-
             alarmHandler.addAlarm(alarm);
-
-
-//            alarmHandler.startNotification(this, notifyIntent);
-
-
-//            PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
-//                    (getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
-//                Toast.makeText(this, "Event scheduled at " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR), Toast.LENGTH_LONG).show();
-//            } else {
-//                alarmManager.cancel(notifyPendingIntent);
-//            }
         }
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {

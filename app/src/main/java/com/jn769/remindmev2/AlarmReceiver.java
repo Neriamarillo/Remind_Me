@@ -19,10 +19,7 @@ import java.util.Objects;
 public class AlarmReceiver extends BroadcastReceiver {
 
     private static final String CHANNEL_ID = "Reminders";
-    private static String GROUP_KEY_REMINDERS = "GROUP_KEY_REMINDERS";
-    int SUMMARY_ID = 0;
-
-    private NotificationManager notificationManager;
+    private final int SUMMARY_ID = 0;
 
     private List<Intent> intentList;
     private Alarm alarm;
@@ -49,7 +46,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         description = bundle.getString("description");
         notificationId = bundle.getLong("alarmId");
 
-        notificationManager = (NotificationManager)
+        NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         deliverNotification(context);
@@ -63,6 +60,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         boolean isBundledNotification = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
 
+        String GROUP_KEY_REMINDERS = "GROUP_KEY_REMINDERS";
         Notification summaryNotification =
                 new NotificationCompat.Builder(context, CHANNEL_ID)
                         .setContentTitle("Reminders")

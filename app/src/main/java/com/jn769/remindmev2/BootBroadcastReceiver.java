@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class BootBroadcastReceiver extends BroadcastReceiver {
 
-    AlarmHandler alarmHandler;
+    private AlarmHandler alarmHandler;
 
     @Override
     public void onReceive(Context context, Intent intent) {

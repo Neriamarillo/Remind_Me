@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "alarms")
-public class Alarm {
+class Alarm {
 
     @NonNull
     @ColumnInfo(name = "title")
@@ -23,18 +23,19 @@ public class Alarm {
     private long alarmTime;
 
 
-    public Alarm(String title, String description, long alarmId, long alarmTime) {
+    public Alarm(@NonNull String title, String description, long alarmId, long alarmTime) {
         this.title = title;
         this.description = description;
         this.alarmId = alarmId;
         this.alarmTime = alarmTime;
     }
 
+    @NonNull
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(@NonNull String title) {
         this.title = title;
     }
 

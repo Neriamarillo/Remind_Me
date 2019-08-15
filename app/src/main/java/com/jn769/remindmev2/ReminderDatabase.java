@@ -32,7 +32,7 @@ public abstract class ReminderDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Room uses an own database hash to uniquely identify the database

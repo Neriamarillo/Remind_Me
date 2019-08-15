@@ -17,21 +17,18 @@ import static android.content.Context.ALARM_SERVICE;
 class AlarmHandler {
 
     Intent notifyIntent;
-    private String title;
-    private String description;
     private long notificationId;
     private long alarmId;
-    private long storedAlarmId;
 
     private Alarm alarm;
 
     private Application app;
 
-    private Context context;
+    private final Context context;
 
     private List<Alarm> alarmList = new ArrayList<>();
 
-    private AlarmRepository alarmRepository;
+    private final AlarmRepository alarmRepository;
 
     AlarmHandler(Application application) {
         alarmRepository = new AlarmRepository(application);
@@ -86,7 +83,6 @@ class AlarmHandler {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarm.getAlarmTime(), notifyPendingIntent);
-//            Toast.makeText(this, "Event scheduled at " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR), Toast.LENGTH_LONG).show();
             Log.d("START NOTIFICATION: ", "ALARM SET");
 
         } else {
@@ -108,9 +104,9 @@ class AlarmHandler {
 
         for (int i = 0; i <= alarmList.size() - 1; i++) {
 
-            title = alarmList.get(i).getTitle();
-            description = alarmList.get(i).getDescription();
-            storedAlarmId = alarmList.get(i).getAlarmId();
+            String title = alarmList.get(i).getTitle();
+            String description = alarmList.get(i).getDescription();
+            long storedAlarmId = alarmList.get(i).getAlarmId();
 
             Intent notifyIntent = new Intent(context, AlarmReceiver.class);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);

@@ -6,20 +6,14 @@ import android.os.AsyncTask;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class AlarmRepository {
+class AlarmRepository {
 
-    private AlarmDao alarmDao;
-//    private List<Alarm> alarmList;
+    private final AlarmDao alarmDao;
 
     AlarmRepository(Application application) {
         ReminderDatabase db = ReminderDatabase.getDatabase(application);
         alarmDao = db.alarmDao();
-//        alarmList = alarmDao.getAlarms();
     }
-
-//    List<Alarm> getAlarmList() {
-//        return alarmList;
-//    }
 
     public void insert(Alarm alarm) {
         new AlarmRepository.insertAsyncTask(alarmDao).execute(alarm);
@@ -35,7 +29,7 @@ public class AlarmRepository {
 
     private static class insertAsyncTask extends AsyncTask<Alarm, Void, Void> {
 
-        private AlarmDao mAsyncTaskDao;
+        private final AlarmDao mAsyncTaskDao;
 
         insertAsyncTask(AlarmDao dao) {
             mAsyncTaskDao = dao;
@@ -50,7 +44,7 @@ public class AlarmRepository {
 
     private static class deleteAsyncTask extends AsyncTask<Alarm, Void, Void> {
 
-        private AlarmDao mAsyncTaskDao;
+        private final AlarmDao mAsyncTaskDao;
 
         deleteAsyncTask(AlarmDao dao) {
             mAsyncTaskDao = dao;
@@ -66,7 +60,7 @@ public class AlarmRepository {
 
     private static class getAsyncTask extends AsyncTask<Alarm, Void, List<Alarm>> {
 
-        private AlarmDao mAsyncTaskDao;
+        private final AlarmDao mAsyncTaskDao;
 
         getAsyncTask(AlarmDao dao) {
             mAsyncTaskDao = dao;

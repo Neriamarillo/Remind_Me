@@ -42,17 +42,14 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
 
     private ReminderViewModel reminderViewModel;
 
-    Bundle bundle;
+    private Bundle bundle;
     private int reminderId;
-    private LiveData<Reminder> reminderLiveData;
 
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
     private SimpleDateFormat smallDateFormatter;
     private Calendar calendar;
     private Date dateSet;
-    private String dateString;
-    private String timeString;
     private Date timeSet;
     private Date selectedDate;
 
@@ -63,8 +60,6 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
     private TextInputEditText descEditText;
     private LinearLayout timeDate;
     private MaterialCheckBox materialCheckBox;
-
-    private RevealAnimation revealAnimation;
 
     private NotificationManager notificationManager;
     private long alarmId;
@@ -93,11 +88,6 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
                 finish();
             }
         });
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//        }
-
 
         EditReminderViewModel editReminderViewModel = ViewModelProviders.of(this).get(EditReminderViewModel.class);
         reminderViewModel = ViewModelProviders.of(this).get(ReminderViewModel.class);
@@ -121,9 +111,6 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         Log.d("DATE", String.valueOf(dateEditText.getText()));
         Log.d("TIME", String.valueOf(timeEditText.getText()));
 
-//        materialCheckBox.setChecked(false);
-
-
         Intent intent = this.getIntent();
 
         bundle = intent.getExtras();
@@ -133,10 +120,10 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         }
 
         CircularRevealCoordinatorLayout rootLayout = findViewById(R.id.editReminder);
-        revealAnimation = new RevealAnimation(rootLayout, intent, this);
+        RevealAnimation revealAnimation = new RevealAnimation(rootLayout, intent, this);
 
         // LiveData
-        reminderLiveData = editReminderViewModel.getReminder(reminderId);
+        LiveData<Reminder> reminderLiveData = editReminderViewModel.getReminder(reminderId);
         reminderLiveData.observe(this, new Observer<Reminder>() {
             @Override
             public void onChanged(Reminder reminder) {
@@ -158,7 +145,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
 
                 Log.d("CHECKBOX AT OBSERVER", String.valueOf(materialCheckBox.isChecked()));
 
-                Log.d("DATE EDIT TEXT", timeEditText.getText().toString());
+                Log.d("DATE EDIT TEXT", Objects.requireNonNull(Objects.requireNonNull(timeEditText.getText())).toString());
 
             }
 
@@ -213,7 +200,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         return text != null && text.length() >= 1;
     }
 
-    public void setReminderInfo() {
+    private void setReminderInfo() {
         Log.d("Notification Requested at Edit Reminder Set", String.valueOf(notificationRequested));
 
         if (notificationRequested) {
@@ -225,7 +212,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
             dateEditText.setText("");
         }
 
-        Log.d("DATE EDIT TEXT", timeEditText.getText().toString());
+        Log.d("DATE EDIT TEXT", Objects.requireNonNull(timeEditText.getText()).toString());
         Reminder editedReminder = new Reminder(
                 reminderId,
                 Objects.requireNonNull(titleEditText.getText()).toString(),
@@ -245,7 +232,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
     }
 
     // Time Selection Listener
-    public void timeListener() {
+    private void timeListener() {
         timeEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,7 +251,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
     }
 
     // Time setup
-    public void setUpTime() {
+    private void setUpTime() {
         //                R.style.RemindMe_Picker,
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 this,
@@ -283,15 +270,12 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
         calendar.set(Calendar.MINUTE, selectedMinute);
         time = calendar.getTime();
-//        timeSet = time;
-        timeString = timeFormatter.format(time);
+        String timeString = timeFormatter.format(time);
         timeEditText.setText(timeString);
-//        timeEditText.setShowSoftInputOnFocus(false);
     }
 
     // Date Selection Listener
-    public void dateListener() {
-//        final TextInputEditText setDate = findViewById(R.id.dateEditText);
+    private void dateListener() {
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -309,7 +293,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
     }
 
     // Date setup
-    public void setUpDate() {
+    private void setUpDate() {
         //                R.style.RemindMe_Picker,
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
@@ -332,7 +316,7 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
         date = calendar.getTime();
 //        dateSet = date;
 //        final TextInputEditText dateEditText = findViewById(R.id.dateEditText);
-        dateString = dateFormatter.format(date);
+        String dateString = dateFormatter.format(date);
         dateEditText.setText(dateString);
     }
 
@@ -346,35 +330,5 @@ public class EditReminder extends AppCompatActivity implements DatePickerDialog.
                 calendar.getTimeInMillis());
 
         alarmHandler.addAlarm(alarm);
-
-//        Intent notifyIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
-//        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-//        PendingIntent notifyPendingIntent;
-//        Log.d("title", String.valueOf(titleEditText.getText()));
-//        notifyIntent.putExtra("title", String.valueOf(titleEditText.getText()));
-//        notifyIntent.putExtra("description", String.valueOf(descEditText.getText()));
-//
-//        if (materialCheckBox.isChecked()) {
-//            if (alarmId == 0) {
-//                alarmId = calendar.getTimeInMillis();
-//            }
-//            notifyPendingIntent = PendingIntent.getBroadcast
-//                    (getApplicationContext(), (int) alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), notifyPendingIntent);
-//                Toast.makeText(this, "Event scheduled at "
-//                                + calendar.get(Calendar.HOUR_OF_DAY) + ":"
-//                                + calendar.get(Calendar.MINUTE) + " "
-//                                + calendar.get(Calendar.DAY_OF_MONTH) + "/"
-//                                + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR),
-//                        Toast.LENGTH_LONG).show();
-//            }
-//        } else {
-//            notifyPendingIntent = PendingIntent.getBroadcast
-//                    (getApplicationContext(), (int) alarmId, notifyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-//
-//            alarmManager.cancel(notifyPendingIntent);
-//        }
     }
 }

@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.Objects;
 
-public class ReminderViewModel extends AndroidViewModel {
+class ReminderViewModel extends AndroidViewModel {
 
-    private ReminderRepository reminderRepository;
+    private final ReminderRepository reminderRepository;
     private final LiveData<List<Reminder>> reminderList;
 
     public ReminderViewModel(Application application) {
@@ -39,6 +39,5 @@ public class ReminderViewModel extends AndroidViewModel {
     void update(Reminder reminder) {
         reminderRepository.update(reminder);
     }
-
 
 }

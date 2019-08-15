@@ -15,7 +15,7 @@ class RevealAnimation {
     static final String EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y";
 
     private final View mView;
-    private Activity mActivity;
+    private final Activity mActivity;
 
     private int revealX;
     private int revealY;

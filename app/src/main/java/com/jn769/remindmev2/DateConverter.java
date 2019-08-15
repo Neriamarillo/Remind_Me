@@ -1,10 +1,10 @@
 package com.jn769.remindmev2;
 
-import java.util.Date;
-
 import androidx.room.TypeConverter;
 
-public class DateConverter {
+import java.util.Date;
+
+class DateConverter {
     @TypeConverter
     public static Date toDate(Long timestamp) {
         return timestamp == null ? null : new Date(timestamp);

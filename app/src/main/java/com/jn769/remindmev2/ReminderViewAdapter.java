@@ -30,15 +30,12 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
 
     private List<Reminder> reminderList; // Cached copy of words
 
-    private Reminder singleReminder; // Single reminder
-
 
     private ReminderViewModel reminderViewModel;
     private ReminderRepository reminderRepository;
 
     private Context context;
     private int mExpandedPosition = -1;
-    private int previousExpandedPosition = -1;
 
 
     class ReminderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -63,7 +60,6 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
             editButton.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
 
-
         }
 
         @Override
@@ -77,7 +73,6 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
                 intent.putExtra("REMINDER_ID", reminderList.get(position).getId());
                 ActivityCompat.startActivity(context, intent, null);
 
-//                startRevealEdit(view, reminderList.get(position).getId());
             }
 
             if (view == deleteButton) {
@@ -108,8 +103,6 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
         }
     }
 
-//    DateFormat output = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
-
     ReminderViewAdapter(List<Reminder> reminderList) {
         this.reminderList = reminderList;
     }
@@ -132,6 +125,7 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
         final boolean isExpanded = position == mExpandedPosition;
         holder.cardButtons.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.itemView.setActivated(isExpanded);
+        int previousExpandedPosition = -1;
         if (isExpanded)
             previousExpandedPosition = position;
 
@@ -178,7 +172,8 @@ public class ReminderViewAdapter extends RecyclerView.Adapter<ReminderViewAdapte
     }
 
     void setSingleReminder(Reminder reminder) {
-        singleReminder = reminder;
+        // Single reminder
+        Reminder singleReminder = reminder;
         notifyDataSetChanged();
     }
 

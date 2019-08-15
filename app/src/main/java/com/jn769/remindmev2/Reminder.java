@@ -13,7 +13,7 @@ import androidx.room.TypeConverters;
  * @version 1.0
  */
 @Entity(tableName = "reminders")
-public class Reminder {
+class Reminder {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull

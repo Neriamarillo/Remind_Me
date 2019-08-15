@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
-public class App extends Application {
+class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

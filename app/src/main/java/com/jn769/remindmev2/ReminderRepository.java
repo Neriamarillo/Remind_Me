@@ -7,11 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class ReminderRepository {
+class ReminderRepository {
 
-    private ReminderDao reminderDao;
-    private LiveData<List<Reminder>> reminderList;
-    private List<Reminder> offReminderList;
+    private final ReminderDao reminderDao;
+    private final LiveData<List<Reminder>> reminderList;
     private Reminder singleReminder;
 
     ReminderRepository(Application application) {
@@ -41,7 +40,7 @@ public class ReminderRepository {
     }
 
     public List<Reminder> getOffReminderList() {
-        offReminderList = reminderDao.getReminderList();
+        List<Reminder> offReminderList = reminderDao.getReminderList();
         return offReminderList;
     }
 
@@ -51,7 +50,7 @@ public class ReminderRepository {
 
     private static class insertAsyncTask extends AsyncTask<Reminder, Void, Void> {
 
-        private ReminderDao mAsyncTaskDao;
+        private final ReminderDao mAsyncTaskDao;
 
         insertAsyncTask(ReminderDao dao) {
             mAsyncTaskDao = dao;
@@ -66,7 +65,7 @@ public class ReminderRepository {
 
     private static class deleteAsyncTask extends AsyncTask<Reminder, Void, Void> {
 
-        private ReminderDao mAsyncTaskDao;
+        private final ReminderDao mAsyncTaskDao;
 
         deleteAsyncTask(ReminderDao dao) {
             mAsyncTaskDao = dao;
@@ -82,7 +81,7 @@ public class ReminderRepository {
 
     private static class updateAsyncTask extends AsyncTask<Reminder, Void, Void> {
 
-        private ReminderDao mAsyncTaskDao;
+        private final ReminderDao mAsyncTaskDao;
 
         updateAsyncTask(ReminderDao dao) {
             mAsyncTaskDao = dao;
@@ -94,31 +93,5 @@ public class ReminderRepository {
             return null;
         }
     }
-
-//    private static class getAsyncTask extends AsyncTask<Reminder, Void, Reminder> {
-//
-//        private ReminderDao mAsyncTaskDao;
-//
-//        getAsyncTask(ReminderDao dao) {
-//            mAsyncTaskDao = dao;
-//        }
-//
-//        @Override
-//        protected Reminder doInBackground(Reminder... reminders) {
-//            return null;
-//        }
-
-
-//        protected Reminder doInBackground(final int position) {
-//            mAsyncTaskDao.getReminder(position);
-//            return null;
-//        }
-
-//        @Override
-//        protected Reminder doInBackground(final Reminder... params) {
-//            return mAsyncTaskDao.getReminder(params);
-////            return null;
-//        }
-//    }
 
 }
